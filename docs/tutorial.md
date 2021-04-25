@@ -3,7 +3,7 @@
 2. [Basic Usage](https://github.com/ThatsLiamS/discord.js-ghost-ping/blob/main/docs/tutorial.md#2-basic-usage)
 - [Detectors](https://github.com/ThatsLiamS/discord.js-ghost-ping/blob/main/docs/tutorial.md#set-up-the-detectors)
 - [parameters](https://github.com/ThatsLiamS/discord.js-ghost-ping/blob/main/docs/tutorial.md#required-parameters)
-3. [Customisation](https://github.com/ThatsLiamS/discord.js-ghost-ping/blob/main/docs/tutorial.md#1-installation)
+3. [Customisation](https://github.com/ThatsLiamS/discord.js-ghost-ping/blob/main/docs/tutorial.md#3-Customisation)
 - [Embed](https://github.com/ThatsLiamS/discord.js-ghost-ping/blob/main/docs/tutorial.md#embed)
 - [Channel](https://github.com/ThatsLiamS/discord.js-ghost-ping/blob/main/docs/tutorial.md#channel)
 # **1. Installation**
