@@ -9,7 +9,7 @@ This package comes from the developer of verified bots: `@Coin Flipper#1767` and
 - [x] Send Messages As the Bot
 
 ### Help
-If you require help using this package, please join our [Discord Server](https://discord.gg/2je9aJynqt). There is a full tutorial on how to install and use the package. If you have any questions, please don't hesitate to ask in one of the support channels, a member of the support team will be happy to assist.
+If you require help using this package, check out the [GitHub Tutorial](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki/Tutorial). If you have any questions or need any help, please don't hesitate to ask in our [Support Server](https://discord.gg/2je9aJynqt).
 
 # **Installation**
 To install, do this command in your shell or command prompt then you are good to go! 
@@ -26,7 +26,7 @@ const client = new Discord.Client();
 /* Define the 'discord.js-ghost-ping' package! */
 const GhostPing = require('discord.js-ghost-ping')
 
-/* setting up the ghost-ping detector! */
+/* setting up the ghost-ping detectors! */
 client.on('messageDelete', message => {
     GhostPing.detector("messageDelete", message)
 });
