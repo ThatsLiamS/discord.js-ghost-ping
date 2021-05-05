@@ -9,7 +9,6 @@ for(const file of featureFiles){
 }
 
 const ErrorMessages = {
-    unableToSendMessage: `\ndiscordjs-ghost-ping: Unable to send embed to channel provided\nDiscordAPIError: Missing Permissions`,
     expectedParameterError: `\ndiscordjs-ghost-ping: expected parameter (EventType) in dectector()\n\ndiscord.js#client.on(\"messageDelete\", message => {\n                       ^\n                       |\n(EventType) is \'messageDelete\'\n`,
     unpectedParameterError: `\ndiscordjs-ghost-ping: unexpected parameter (EventType) in dectector()\n\ndiscord.js#client.on(\"messageDelete\", message => {\n                       ^\n                       |\n(EventType) is \'messageDelete\'\n`,
     MessageOne: `\ndiscordjs-ghost-ping: expected parameter (message) in dectector()\n\ndiscord.js#client.on(\"messageDelete\", message => {\n                                        ^\n                                        |\n(message) is \'message\'`,
