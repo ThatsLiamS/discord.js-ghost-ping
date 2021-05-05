@@ -30,6 +30,10 @@ module.exports = {
         if(stringMentions == "") return   
 
         const embed = new Discord.MessageEmbed().setTitle(`${embedInfo.title}`).setAuthor(`${oldMessage.member.user.tag}`, `${oldMessage.member.user.displayAvatarURL()}`).setColor(`${embedInfo.color}`).setThumbnail(`${embedInfo.picture}`).setDescription(`**Author:** ${oldMessage.author}\n**Channel:** ${oldMessage.channel}\n\n**Mentions:**\n${stringMentions}`).setFooter(`${embedInfo.footer}`).setTimestamp();
-        embedInfo.channel.send({embed}).catch(() => { console.log(ErrorMessages.unableToSendMessage) })
+        embedInfo.channel.send({embed}).catch((error) => {
+            console.error(error)
+        })
+
+        return true
     }
 }
