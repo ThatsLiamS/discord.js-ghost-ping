@@ -21,8 +21,11 @@ module.exports = {
 
             if (!embedInfo.channel instanceof Discord.TextChannel) return console.log(`\ndiscordjs-ghost-ping: channel not found from ID provided\n\n'channel: ${value.channel}'`);
         } 
+        if(stringMentions == "") return
 
         const embed = new Discord.MessageEmbed().setTitle(`${embedInfo.title}`).setAuthor(`${message.member.user.tag}`, `${message.member.user.displayAvatarURL()}`).setColor(`${embedInfo.color}`).setThumbnail(`${embedInfo.picture}`).setDescription(`**Author:** ${message.author}\n**Channel:** ${message.channel}\n\n**Mentions:**\n${stringMentions}`).setFooter(`${embedInfo.footer}`).setTimestamp();
-        embedInfo.channel.send({embed}).catch(() => { console.log(ErrorMessages.unableToSendMessage) })
+        embedInfo.channel.send({embed})
+
+        return true
     }
 }
