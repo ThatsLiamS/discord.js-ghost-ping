@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
 module.exports = {
     name: "ghostping-messageUpdate",
-    description: ``,
     async execute(ErrorMessages, oldMessage, newMessage, value) {
-        if (oldMessage === undefined || newMessage == undefined) return console.log(ErrorMessages.MessageBoth);
+        if (oldMessage === undefined || newMessage == undefined) throw ErrorMessages.MessageBoth
+
         if(oldMessage.author.bot || oldMessage.mentions.members.size == 0 && oldMessage.mentions.roles.size === 0) return 
 
         let embedInfo = { title: `Ghost Ping Detected`, color: `C0C0C0`, picture: `https://cdn.glitch.com/c7f57949-b55c-47c7-bd83-e7563dda5a78%2Fghost%20ping.png?v=1616338530868`, footer: `Don't Ghost Ping, smh`, channel: oldMessage.channel }
@@ -25,13 +25,13 @@ module.exports = {
             if(value.footer) embedInfo.footer = value.footer;
             if(value.channel) embedInfo.channel = await oldMessage.guild.channels.cache.get(value.channel)
 
-            if (!embedInfo.channel instanceof Discord.TextChannel) return console.log(`\ndiscordjs-ghost-ping: channel not found from ID provided\n\n'channel: ${value.channel}'`);
+            if (!embedInfo.channel instanceof Discord.TextChannel) throw ErrorMessages.unableToGetChannel
         }
         if(stringMentions == "") return   
 
-        const embed = new Discord.MessageEmbed().setTitle(`${embedInfo.title}`).setAuthor(`${oldMessage.member.user.tag}`, `${oldMessage.member.user.displayAvatarURL()}`).setColor(`${embedInfo.color}`).setThumbnail(`${embedInfo.picture}`).setDescription(`**Author:** ${oldMessage.author}\n**Channel:** ${oldMessage.channel}\n\n**Mentions:**\n${stringMentions}`).setFooter(`${embedInfo.footer}`).setTimestamp();
+        const embed = new Discord.MessageEmbed().setTitle(`${embedInfo.title}`).setAuthor(`${oldMessage.member.user.tag}`, `${oldMessage.member.user.displayAvatarURL()}`).setColor(`${embedInfo.color}`).setThumbnail(`${embedInfo.picture}`).addFields( { name: `**Channel:**`, value: `${oldMessage.channel}`, inline: true }, { name: `**Mentions:**`, value: `${stringMentions}`, inline: true }).setFooter(`${embedInfo.footer}`).setTimestamp();
         embedInfo.channel.send({embed}).catch((error) => {
-            console.error(error)
+            throw ErrorMessages.unableToSendMessage
         })
 
         return true
