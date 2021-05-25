@@ -35,15 +35,18 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 });
 ``` 
 ### Customising The Detector
-You can change the title, color, footer, thumbnail of the embed and the channel you want it sent in. The code below shows the default values.
+You can change the title, color, footer, thumbnail of the embed and the channel you want it sent in. If you want the package to ignore people with certain permissions like `ADMINISTRATOR` add the permissions to the array in ingorePerms. The code below shows the default values.
 ```js
 client.on('messageDelete', message => {
     GhostPing.detector("messageDelete", message, {
       title: `Ghost Ping Detected`,
       color: `C0C0C0`,
       footer: `Don't Ghost Ping, smh`,
-      picture: `https://imgur.com/a/floxQHv`,
-      channel: message.channel.id
+      picture: `https://i.imgur.com/k6pLhtU.png`,
+
+      channel: message.channel.id,
+
+      ignorePerms: []
     })
 });
 ```
