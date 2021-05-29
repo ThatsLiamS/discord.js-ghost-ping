@@ -1,20 +1,18 @@
-const Discord = require('discord.js')
-const { ErrorMessages } = require(`${__dirname}/utils/errors`)
+const { messageDelete, messageUpdate } = require(`${__dirname}/features/ghostping`)
+const { ErrorMessages } = require(`${__dirname}/util/errors`)
 
-const fs = require('fs');
-files = new Discord.Collection();
-const featureFiles = fs.readdirSync(`${__dirname}/features/`).filter(file => file.endsWith('.js'));
-for(const file of featureFiles){
-    const fileInfo = require(`${__dirname}/features/${file}`);
-    files.set(fileInfo.name, fileInfo);
+function detector(EventType, ...args){
+
+    if(EventType){
+        if(EventType == 'messageDelete'){ messageDelete(...args) }
+        else if(EventType == 'messageUpdate'){ messageUpdate(...args) }
+
+        else{ ErrorMessages.unexpectedParameterError }
+
+    } else{ throw ErrorMessages.expectedParameterError }
+
 }
 
 module.exports = {
-    detector: (eventType, two, three, four) => {
-        if (eventType === undefined) throw ErrorMessages.expectedParameterError
-
-        try{ files.get(eventType).execute(two, three, four) }
-        catch{ throw ErrorMessages.unpectedParameterError }
-    
-    }
+    detector
 }
