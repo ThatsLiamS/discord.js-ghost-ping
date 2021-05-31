@@ -12,14 +12,13 @@ function embedValues(object, message){
     }
     if(!object || object && (typeof object !== 'object')){ return editedValues }
 
-
     if(object.title) editedValues.title = object.title
     if(object.color) editedValues.color = object.color
     if(object.picture) editedValues.picture = object.picture
     if(object.footer) editedValues.footer = object.footer
     if(object.channel) editedValues.channel = message.guild.channels.cache.get(object.channel)
 
-    if (!editedValues.channel instanceof Discord.TextChannel) throw ErrorMessages.unableToGetChannel
+    if (!editedValues.channel instanceof Discord.TextChannel){ throw ErrorMessages.unableToGetChannel }
 
     return editedValues
 }
