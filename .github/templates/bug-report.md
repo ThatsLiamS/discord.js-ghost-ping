@@ -1,19 +1,13 @@
 ---
-name: Bug Eeport
+name: Bug Report
 about: Create a report to help us improve
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
 
----
-
-name: Bug report
-about: Report incorrect or unexpected behavior of discord.js-ghost-ping
-title: 'x'
-labels: 'type: bug'
----
+# Issue: Bug Report
 
 #### **Please describe the problem you are having in as much detail as possible:**
 Explanation ... 
