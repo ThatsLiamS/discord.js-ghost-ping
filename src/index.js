@@ -4,13 +4,20 @@ const { ErrorMessages } = require(`${__dirname}/util/errors`)
 function detector(EventType, ...args){
 
     if(EventType){
-        if(EventType == 'messageDelete'){ messageDelete(...args) }
-        else if(EventType == 'messageUpdate'){ messageUpdate(...args) }
+        if(EventType == 'messageDelete'){ 
+            boolean = messageDelete(...args) 
+            return boolean 
+        }
+        if(EventType == 'messageUpdate'){ 
+            boolean = messageUpdate(...args) 
+            return boolean
+        }
 
-        else{ ErrorMessages.unexpectedParameterError }
+        throw ErrorMessages.unexpectedParameterError
 
-    } else{ throw ErrorMessages.expectedParameterError }
-
+    } else{ 
+        throw ErrorMessages.expectedParameterError 
+    }
 }
 
 module.exports = {
