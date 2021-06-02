@@ -12,7 +12,7 @@ function embedValues(object, message){
         channel: message.channel
     }
 
-    /* Does the user provide the object? */
+    /* Does the user provide the argument and is it an object? */
     if(!object || object && (typeof object !== 'object')){ return editedValues }
 
     /* Change the values */
@@ -25,6 +25,7 @@ function embedValues(object, message){
     /* Checks if the channel is a real channel */
     if (!editedValues.channel instanceof Discord.TextChannel){ throw ErrorMessages.unableToGetChannel }
 
+    /* Return the edited values to use in send() */
     return editedValues
 }
 

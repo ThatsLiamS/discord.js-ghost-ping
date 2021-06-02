@@ -5,12 +5,10 @@ function detector(EventType, ...args){
 
     if(EventType){
         if(EventType == 'messageDelete'){ 
-            boolean = messageDelete(...args) 
-            return boolean 
+            return messageDelete(...args)  
         }
         if(EventType == 'messageUpdate'){ 
-            boolean = messageUpdate(...args) 
-            return boolean
+            return messageUpdate(...args) 
         }
 
         throw ErrorMessages.unexpectedParameterError

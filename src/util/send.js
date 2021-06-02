@@ -16,7 +16,7 @@ async function send(value, message, mentions){
     .setFooter(`${embedInfo.footer}`)
     .setTimestamp();
 
-    embedInfo.channel.send({embed}).catch((error) => { 
+    embedInfo.channel.send({embed}).catch(() => { 
         throw ErrorMessages.unableToSendMessage
     })
 
