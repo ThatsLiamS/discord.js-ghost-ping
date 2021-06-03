@@ -11,7 +11,6 @@ async function messageDelete(message, value){
 
     let stringMentions = "";
 
-    
     await message.mentions.members.forEach(member => { 
         if(!member.user.bot  && member.id != message.author.id){ 
             stringMentions += `${member} ` 
@@ -73,7 +72,24 @@ async function messageUpdate(oldMessage, newMessage, value){
     return send(value, newMessage, stringMentions)
 }
 
+
+function detector(EventType, ...args){
+
+    if(EventType){
+        if(EventType == 'messageDelete'){ 
+            return messageDelete(...args)  
+        }
+        if(EventType == 'messageUpdate'){ 
+            return messageUpdate(...args) 
+        }
+
+        throw ErrorMessages.unexpectedParameterError
+
+    } 
+    else{ 
+        throw ErrorMessages.expectedParameterError 
+    }
+}
 module.exports = {
-    messageDelete,
-    messageUpdate
+    detector
 }

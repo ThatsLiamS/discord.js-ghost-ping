@@ -2,21 +2,24 @@ const Discord = require('discord.js')
 const { embedValues } = require(`${__dirname}/embedValues`)
 
 async function send(value, message, mentions){
-    const embedInfo = embedValues(value, message)
+    
+    const { title, color, picture, footer, channel } = embedValues(value, message)
 
     const embed = new Discord.MessageEmbed()
-    .setTitle(`${embedInfo.title}`)
+    .setTitle(`${title}`)
     .setAuthor(`${message.member.user.tag}`, `${message.member.user.displayAvatarURL()}`)
-    .setColor(`${embedInfo.color}`)
-    .setThumbnail(`${embedInfo.picture}`)
+    .setColor(`${color}`)
+    .setThumbnail(`${picture}`)
     .addFields( 
         { name: `**Channel:**`, value: `${message.channel}`, inline: true }, 
         { name: `**Mentions:**`, value: `${mentions}`, inline: true }
     )
-    .setFooter(`${embedInfo.footer}`)
+    .setFooter(`${footer}`)
     .setTimestamp();
 
-    embedInfo.channel.send({embed}).catch(() => { 
+    if (!channel instanceof Discord.TextChannel && !channel instanceof Discord.NewsChannel){ throw ErrorMessages.unableToGetChannel }
+
+    await channel.send({embed}).catch(() => { 
         throw ErrorMessages.unableToSendMessage
     })
 
