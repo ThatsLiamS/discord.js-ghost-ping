@@ -1,31 +1,32 @@
-const Discord = require('discord.js')
-const { embedValues } = require(`${__dirname}/embedValues`)
+const Discord = require('discord.js');
+const { ErrorMessages } = require(`${__dirname}/../util/errors`);
+const { embedValues } = require(`${__dirname}/embedValues`);
 
-async function send(value, message, mentions){
-    
-    const { title, color, picture, footer, channel } = embedValues(value, message)
+async function send(value, message, mentions) {
 
-    const embed = new Discord.MessageEmbed()
-    .setTitle(`${title}`)
-    .setAuthor(`${message.member.user.tag}`, `${message.member.user.displayAvatarURL()}`)
-    .setColor(`${color}`)
-    .setThumbnail(`${picture}`)
-    .addFields( 
-        { name: `**Channel:**`, value: `${message.channel}`, inline: true }, 
-        { name: `**Mentions:**`, value: `${mentions}`, inline: true }
-    )
-    .setFooter(`${footer}`)
-    .setTimestamp();
+	const { title, color, picture, footer, channel } = embedValues(value, message);
 
-    if (!channel instanceof Discord.TextChannel && !channel instanceof Discord.NewsChannel){ throw ErrorMessages.unableToGetChannel }
+	const embed = new Discord.MessageEmbed()
+		.setTitle(`${title}`)
+		.setAuthor(`${message.member.user.tag}`, `${message.member.user.displayAvatarURL()}`)
+		.setColor(`${color}`)
+		.setThumbnail(`${picture}`)
+		.addFields(
+			{ name: `**Channel:**`, value: `${message.channel}`, inline: true },
+			{ name: `**Mentions:**`, value: `${mentions}`, inline: true }
+		)
+		.setFooter(`${footer}`)
+		.setTimestamp();
 
-    await channel.send({embed}).catch(() => { 
-        throw ErrorMessages.unableToSendMessage
-    })
+	if (channel instanceof Discord.TextChannel == false && channel instanceof Discord.NewsChannel == false) { throw ErrorMessages.unableToGetChannel; }
 
-    return true
+	await channel.send({ embed }).catch(() => {
+		throw ErrorMessages.unableToSendMessage;
+	});
+
+	return true;
 }
 
 module.exports = {
-    send
-}
+	send
+};
