@@ -1,11 +1,11 @@
-function checkPerms(member, perms) {
+function perms(member, array) {
 	let result = false;
 
 	/* Checks if the array exists */
-	if(!perms || perms === [] || (perms instanceof Array == false)) { return result; }
+	if(!array || array === [] || (array instanceof Array == false)) { return result; }
 
 	/* Loops through all permissions and checks them */
-	perms.forEach((permission) => {
+	array.forEach((permission) => {
 		if(member.hasPermission(permission)) {
 			result = true;
 		}
@@ -16,5 +16,5 @@ function checkPerms(member, perms) {
 }
 
 module.exports = {
-	checkPerms
+	perms
 };

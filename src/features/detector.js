@@ -1,5 +1,5 @@
 const { ErrorMessages } = require(`${__dirname}/../util/errors`);
-const { checkPerms } = require(`${__dirname}/../util/checkPerms`);
+const ignore = require(`${__dirname}/../util/ignore`);
 const { send } = require(`${__dirname}/../util/send`);
 
 async function messageDelete(message, value) {
@@ -8,7 +8,7 @@ async function messageDelete(message, value) {
 	if(message.author.bot || message.mentions.members.size == 0 && message.mentions.roles.size === 0) { return false ;}
 
 	if(value && value.ignorePerms) {
-		if(checkPerms(message.member, value.ignorePerms) == true) {
+		if(ignore.perms(message.member, value.ignorePerms) == true) {
 			return false;
 		}
 	}
@@ -37,7 +37,7 @@ async function messageUpdate(oldMessage, newMessage, value) {
 	if(oldMessage.author.bot || oldMessage.mentions.members.size == 0 && oldMessage.mentions.roles.size === 0) { return false; }
 
 	if(value && value.ignorePerms) {
-		if(checkPerms(newMessage.member, value.ignorePerms) == true) {
+		if(ignore.perms(newMessage.member, value.ignorePerms) == true) {
 			return false;
 		}
 	}
@@ -88,15 +88,15 @@ function detector(EventType, ...args) {
 		if(EventType == 'messageDelete') {
 			return messageDelete(...args);
 		}
-		if(EventType == 'messageUpdate') {
+		else if(EventType == 'messageUpdate') {
 			return messageUpdate(...args);
 		}
-
-		throw ErrorMessages.unexpectedParameterError;
-
+		else {
+			throw ErrorMessages.unexpectedParameterError;
+		}
 	}
 	else {
-		throw ErrorMessages.expectedParameterError ;
+		throw ErrorMessages.expectedParameterError;
 	}
 }
 

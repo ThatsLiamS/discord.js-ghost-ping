@@ -18,7 +18,9 @@ async function send(value, message, mentions) {
 		.setFooter(`${footer}`)
 		.setTimestamp();
 
-	if (channel instanceof Discord.TextChannel == false && channel instanceof Discord.NewsChannel == false) { throw ErrorMessages.unableToGetChannel; }
+	if (channel instanceof Discord.TextChannel == false && channel instanceof Discord.NewsChannel == false) {
+		throw ErrorMessages.unableToGetChannel;
+	}
 
 	await channel.send({ embed }).catch(() => {
 		throw ErrorMessages.unableToSendMessage;
