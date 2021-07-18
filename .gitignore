@@ -1,5 +1,14 @@
+# Dependency directories
 node_modules/
+jspm_packages/
 
-.git/
+# Bower dependency directory (https://bower.io/)
+bower_components
 
-test/
+# dotenv environment variables file
+.env
+.env.test
+.env.production
+
+# Packager files
+package-lock.json
