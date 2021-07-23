@@ -6,7 +6,7 @@ Add an optional parameter to the `detector()` function, type of JavaScript objec
 
 - [Embed](#Embed)
 - [Channel](#Channel)
-- [Ignore Permissions](#Ignore-Permissions)
+- [Ignore](#Ignore)
 - [Example](#Working-Example)
 
 
@@ -29,11 +29,17 @@ GhostPing.detector('messageDelete', message, {
 })
 ```
 
-### Ignore Permissions
-Use the array `ingorePerms` to select which permissions you want to ignore. If the author has any of these permissions, the message won't get sent.
+### Ignore
+Pick and choose who you ignore and block from the detector. 
+
 ```js
 GhostPing.detector('messageDelete', message, {
-    ignorePerms: ['KICK_MEMBERS', 'MANAGE_MESSAGES']
+    ignore: {
+        users: ['732667572448657539', 'GUILD_MEMBER_ID'],
+        permissions: ['MANAGE_MESSAGES', 'GUILD_PERMISSION_NAME'],
+        channels: ['821152834611445770', 'GUILD_CHANNEL_ID'],
+        roles: ['821156268831801385', 'GUILD_ROLE_ID']
+    }
 })
 ```
 
@@ -45,7 +51,12 @@ GhostPing.detector("messageDelete", message, {
     color: 'C0C0C0',
     picture: 'https://i.imgur.com/k6pLhtU.png',
     footer: 'Don\'t Ghost Ping, smh',
-    channel: message.channel.id
-    ignorePerms: []
+    channel: message.channel.id,
+    ignore: {
+        users: [],
+        permissions: [],
+        channels: [],
+        roles: []
+    }
 })
 ```
