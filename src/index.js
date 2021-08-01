@@ -7,15 +7,13 @@ module.exports = {
 			if(eventType == 'messageDelete') {
 				return await messageDelete(...args);
 			}
-			else if(eventType == 'messageUpdate') {
+			if(eventType == 'messageUpdate') {
 				return await messageUpdate(...args);
 			}
-			else {
-				throw ErrorMessages.unexpectedParameterError;
-			}
+			throw ErrorMessages.unexpectedParameterError;
+
 		}
-		else {
-			throw ErrorMessages.expectedParameterError;
-		}
+		throw ErrorMessages.expectedParameterError;
+
 	}
 };

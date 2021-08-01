@@ -1,5 +1,5 @@
 module.exports = {
-	ignore: async (object, message) => {
+	ignore: (object, message) => {
 
 		let result = false;
 

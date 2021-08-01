@@ -40,7 +40,7 @@ module.exports = {
 			.setFooter(footer)
 			.setTimestamp();
 
-		if(await ignore(object, message) == true) {
+		if(ignore(object, message) == true) {
 			return false;
 		}
 

@@ -1,6 +1,6 @@
 {
     "name": "discord.js-ghost-ping",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Detect Ghost Pings inside of discord.js v13!",
     "main": "src/index.js",
     "scripts": {
@@ -17,7 +17,7 @@
     "author": "ThatsLiamS",
     "license": "MIT",
     "dependencies": {
-        "discord.js": "^13.0.0-dev.c8ca7bf.1627041776"
+        "discord.js": "^13.0.0-dev.t1627831263.774f5b7"
     },
     "repository": {
         "type": "git",
