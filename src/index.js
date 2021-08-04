@@ -1,19 +1,16 @@
-const { ErrorMessages } = require(`${__dirname}/util/errors`);
-const { messageDelete, messageUpdate } = require(`${__dirname}/events`);
+const events = require(`${__dirname}/events`);
+
+/**
+ * @param {String} event - The Client event that was triggered
+**/
 
 module.exports = {
-	detector: async (eventType, ...args) => {
-		if(eventType) {
-			if(eventType == 'messageDelete') {
-				return await messageDelete(...args);
-			}
-			if(eventType == 'messageUpdate') {
-				return await messageUpdate(...args);
-			}
-			throw ErrorMessages.unexpectedParameterError;
+	detector: async (event, ...args) => {
 
+		if(event && events[event]) {
+			return await events[event](...args);
 		}
-		throw ErrorMessages.expectedParameterError;
 
+		throw new Error('Expected parameter \'Event\' at position 0');
 	}
 };

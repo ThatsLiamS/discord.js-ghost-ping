@@ -1,8 +1,10 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
+const ignore = require(`${__dirname}/ignore`);
 
-const { ErrorMessages } = require(`${__dirname}/errors`);
-const { ignore } = require(`${__dirname}/ignore`);
-
+/**
+ * @param {Object} object - Optional customisation object
+ * @param {Object} message - Discord message object
+**/
 const custom = (object, message) => {
 
 	const editedValues = {};
@@ -25,30 +27,37 @@ const custom = (object, message) => {
 	return editedValues;
 };
 
-module.exports = {
-	send: async (object, message, mentions) => {
-		const { title, color, footer, channel } = custom(object, message);
+/**
+ * @param {Object} object - Optional customisation object
+ * @param {Object} message - Discord message object
+ * @param {String} mentions - String of all ghost-pinged mentions
+**/
+const send = async (object, message, mentions) => {
+	const { title, color, footer, channel } = custom(object, message);
 
-		const embed = new Discord.MessageEmbed()
-			.setTitle(title)
-			.setAuthor(`${message.member.user.tag}`, `${message.member.user.displayAvatarURL()}`)
-			.setColor(color)
-			.addFields(
-				{ name: `**Channel:**`, value: `${message.channel}`, inline: true },
-				{ name: `**Mentions:**`, value: `${mentions}`, inline: true }
-			)
-			.setFooter(footer)
-			.setTimestamp();
+	const embed = new MessageEmbed()
+		.setTitle(`${title}`)
+		.setAuthor(`${message.member.user.tag}`, `${message.member.user.displayAvatarURL()}`)
+		.setColor(`${color}`)
+		.addFields(
+			{ name: `**Channel:**`, value: `${message.channel}`, inline: true },
+			{ name: `**Mentions:**`, value: `${mentions}`, inline: true }
+		)
+		.setFooter(`${footer}`)
+		.setTimestamp();
 
-		if(ignore(object, message) == true) {
+	if(object && object.ignore) {
+		if(ignore(object.ignore, message) == true) {
 			return false;
 		}
-
-		await channel.send({ embeds: [embed] }).catch(() => {
-			throw ErrorMessages.unableToSendMessage;
-		});
-
-		return true;
-
 	}
+
+	await channel.send({ embeds: [embed] }).catch(() => {
+		throw new Error('Unable to send message to channel provided');
+	});
+
+	return true;
+
 };
+
+module.exports = send;

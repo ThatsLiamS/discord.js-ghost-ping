@@ -21,8 +21,6 @@ If you don't understand something in the [documentation](https://github.com/That
 To install, do this command in your shell or command prompt then you are good to go! 
 ```
 npm install discord.js-ghost-ping
-/* or */
-yarn add discord.js-ghost-ping
 ```
 # Example Usage
 This is a working example. 
@@ -32,12 +30,12 @@ const client = new Discord.Client()
 
 const GhostPing = require('discord.js-ghost-ping')
 
-client.on('messageDelete', message => {
-    GhostPing.detector('messageDelete', message)
+client.on('messageDelete', async (message) => {
+    await GhostPing.detector('messageDelete', message)
 })
 
-client.on('messageUpdate', (oldMessage, newMessage) => {
-    GhostPing.detector('messageUpdate', oldMessage, newMessage)
+client.on('messageUpdate', async (oldMessage, newMessage) => {
+    await GhostPing.detector('messageUpdate', oldMessage, newMessage)
 })
 
 client.login(process.env['MyToken'])
