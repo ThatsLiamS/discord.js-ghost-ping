@@ -1,16 +1,19 @@
 const events = require(`${__dirname}/events`);
 
 /**
- * @param {String} event - The Client event that was triggered
+ * handles and executes event files
+ *
+ * @param {string} event - The message event that was triggered
+ *
+ * @returns {boolean}
 **/
+const detector = async (event, ...args) => {
 
-module.exports = {
-	detector: async (event, ...args) => {
-
-		if(event && events[event]) {
-			return await events[event](...args);
-		}
-
-		throw new Error('Expected parameter \'Event\' at position 0');
+	if(event && events[event]) {
+		return await events[event](...args);
 	}
+
+	throw new Error('Expected parameter \'Event\' at position 0');
 };
+
+module.exports = { detector };

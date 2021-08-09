@@ -1,9 +1,12 @@
-const { MessageEmbed } = require('discord.js');
 const ignore = require(`${__dirname}/ignore`);
 
 /**
- * @param {Object} object - Optional customisation object
- * @param {Object} message - Discord message object
+ * assigns custom field values for the embed
+ *
+ * @param {object} object - Optional customisation object
+ * @param {object} message - Discord message object
+ *
+ * @returns {object}
 **/
 const custom = (object, message) => {
 
@@ -28,29 +31,33 @@ const custom = (object, message) => {
 };
 
 /**
- * @param {Object} object - Optional customisation object
- * @param {Object} message - Discord message object
- * @param {String} mentions - String of all ghost-pinged mentions
+ * responsible for creating and sending the message in Discord
+ *
+ * @param {object} object - Optional customisation object
+ * @param {object} message - Discord message object
+ * @param {string} mentions - String of all ghost-pinged mentions
+ *
+ * @returns {boolean}
 **/
 const send = async (object, message, mentions) => {
-	const { title, color, footer, channel } = custom(object, message);
-
-	const embed = new MessageEmbed()
-		.setTitle(`${title}`)
-		.setAuthor(`${message.member.user.tag}`, `${message.member.user.displayAvatarURL()}`)
-		.setColor(`${color}`)
-		.addFields(
-			{ name: `**Channel:**`, value: `${message.channel}`, inline: true },
-			{ name: `**Mentions:**`, value: `${mentions}`, inline: true }
-		)
-		.setFooter(`${footer}`)
-		.setTimestamp();
 
 	if(object && object.ignore) {
 		if(ignore(object.ignore, message) == true) {
 			return false;
 		}
 	}
+	const { title, color, footer, channel } = custom(object, message);
+
+	const embed = {
+		color: `${color}`, title: `${title}`, url: 'https://www.npmjs.com/package/discord.js-ghost-ping',
+		author: { name: `${message.member.user.tag}`, icon_url: `${message.member.user.displayAvatarURL()}`, },
+		fields: [
+			{ name: '**Channel:**', value: `${message.channel}`, },
+			{ name: '**Mentions:**', value: `${mentions}`, },
+		],
+		timestamp: new Date(),
+		footer: { text: `${footer}`, },
+	};
 
 	await channel.send({ embeds: [embed] }).catch(() => {
 		throw new Error('Unable to send message to channel provided');

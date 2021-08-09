@@ -1,15 +1,20 @@
 const send = require(`${__dirname}/util/send`);
 
+
 /**
+ * Handles the messageUpdate event
+ *
  * @param {object} oldMessage - Orginal discord message object
  * @param {object} newMessage - Updated discord message object
  * @param {object} object - optional customisation object
+ *
+ * @returns {boolean}
 **/
 const messageUpdate = async (oldMessage, newMessage, object) => {
 	if (oldMessage === undefined || newMessage == undefined || !oldMessage.mentions || !newMessage.mentions) {
 		throw new Error('Expected parameters \'oldMessage\', \'newMessage\' at position 1, 2');
 	}
-	if(oldMessage.author.bot || oldMessage.mentions.members.size == 0 && oldMessage.mentions.roles.size === 0) {
+	if(oldMessage.author.bot || oldMessage.mentions.members.size == 0 && oldMessage.mentions.roles.size == 0) {
 		return false;
 	}
 
@@ -37,21 +42,26 @@ const messageUpdate = async (oldMessage, newMessage, object) => {
 			mentions.push(mention);
 		}
 	}
-	if(!mentions.join('')) { return false; }
+	if(mentions == []) { return false; }
 
 	return await send(object, newMessage, mentions.join(', '));
 };
 
+
 /**
+ * Handles the messageDelete event
+ *
  * @param {object} message - Discord message object
  * @param {object} object - optional customisation
+ *
+ * @returns {boolean}
 **/
 const messageDelete = async (message, object) => {
 
 	if(message === undefined || !message.mentions) {
 		throw new Error('Expected parameter \'message\' at position 1');
 	}
-	if(message.author.bot || message.mentions.members.size == 0 && message.mentions.roles.size === 0) {
+	if(message.author.bot || message.mentions.members.size == 0 && message.mentions.roles.size == 0) {
 		return false;
 	}
 
@@ -65,10 +75,11 @@ const messageDelete = async (message, object) => {
 	message.mentions.roles.forEach((role) => {
 		mentions.push(role);
 	});
-	if(!mentions.join('')) { return false; }
+	if(mentions == []) { return false; }
 
 	return await send(object, message, mentions.join(', '));
 };
+
 
 module.exports = {
 	messageUpdate,
