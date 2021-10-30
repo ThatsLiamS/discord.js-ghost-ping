@@ -33,7 +33,9 @@ npm install discord.js-ghost-ping
 This is a working example. 
 ```js
 const Discord = require('discord.js')
-const client = new Discord.Client()
+const client = new Discord.Client({
+    intents: ['GUILD_MESSAGES'],
+})
 
 const GhostPing = require('discord.js-ghost-ping')
 

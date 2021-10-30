@@ -36,7 +36,9 @@ The variable `GhostPing` has an attribute `detector()`.
 #### **Working Example:**
 ```js
 const Discord = require('discord.js')
-const client = new Discord.Client()
+const client = new Discord.Client({
+    intents: ['GUILD_MESSAGES'],
+})
 
 const GhostPing = require('discord.js-ghost-ping')
 

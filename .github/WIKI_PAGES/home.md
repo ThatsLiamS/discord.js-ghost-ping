@@ -18,7 +18,9 @@ This package comes from the developer of verified bots: [**@Coin Flipper#1767**]
 
 ```js
 const Discord = require('discord.js')
-const client = new Discord.Client()
+const client = new Discord.Client({
+    intents: ['GUILD_MESSAGES'],
+})
 
 const GhostPing = require('discord.js-ghost-ping')
 
