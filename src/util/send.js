@@ -50,17 +50,17 @@ const send = async (object, message, mentions) => {
 
 	const embed = {
 		color: `${color}`, title: `${title}`, url: 'https://www.npmjs.com/package/discord.js-ghost-ping',
-		author: { name: `${message.member.user.tag}`, icon_url: `${message.member.user.displayAvatarURL()}`, },
+		author: { name: `${message.author.tag}`, icon_url: `${message.author.displayAvatarURL()}`, },
 		fields: [
-			{ name: '**Channel:**', value: `${message.channel}`, },
-			{ name: '**Mentions:**', value: `${mentions}`, },
+			{ name: '**Channel:**', value: `${message.channel}`, inline: true },
+			{ name: '**Mentions:**', value: `${mentions}`, inline: true },
 		],
 		timestamp: new Date(),
 		footer: { text: `${footer}`, },
 	};
 
 	await channel.send({ embeds: [embed] }).catch(() => {
-		throw new Error('Unable to send message to channel provided');
+		throw new Error('Unable to send message to channel');
 	});
 
 	return true;

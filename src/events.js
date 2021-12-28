@@ -8,7 +8,7 @@ const send = require(`${__dirname}/util/send`);
  * @param {object} newMessage - Updated discord message object
  * @param {object} object - optional customisation object
  *
- * @returns {boolean}
+ * @returns {Promise<void>}
 **/
 const messageUpdate = async (oldMessage, newMessage, object) => {
 	if (oldMessage === undefined || newMessage == undefined || !oldMessage.mentions || !newMessage.mentions) {
@@ -29,12 +29,8 @@ const messageUpdate = async (oldMessage, newMessage, object) => {
 			newArray.push(`${member}`);
 		}
 	});
-	oldMessage.mentions.roles.forEach((role) => {
-		oldArray.push(`${role}`);
-	});
-	newMessage.mentions.roles.forEach((role) => {
-		newArray.push(`${role}`);
-	});
+	oldMessage.mentions.roles.forEach((role) => oldArray.push(`${role}`));
+	newMessage.mentions.roles.forEach((role) => newArray.push(`${role}`));
 
 	let mentions = [];
 	for(const mention of oldArray) {
@@ -42,8 +38,8 @@ const messageUpdate = async (oldMessage, newMessage, object) => {
 			mentions.push(mention);
 		}
 	}
-	if(mentions == []) { return false; }
 
+	if(mentions == []) { return false; }
 	return await send(object, newMessage, mentions.join(', '));
 };
 
@@ -54,7 +50,7 @@ const messageUpdate = async (oldMessage, newMessage, object) => {
  * @param {object} message - Discord message object
  * @param {object} object - optional customisation
  *
- * @returns {boolean}
+ * @returns {Promise<void>}
 **/
 const messageDelete = async (message, object) => {
 
@@ -72,11 +68,9 @@ const messageDelete = async (message, object) => {
 			mentions.push(member);
 		}
 	});
-	message.mentions.roles.forEach((role) => {
-		mentions.push(role);
-	});
-	if(mentions == []) { return false; }
+	message.mentions.roles.forEach((role) => mentions.push(role));
 
+	if(mentions == []) { return false; }
 	return await send(object, message, mentions.join(', '));
 };
 

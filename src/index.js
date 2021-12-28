@@ -5,7 +5,7 @@ const events = require(`${__dirname}/events`);
  *
  * @param {string} event - The message event that was triggered
  *
- * @returns {boolean}
+ * @returns {Promise<void>}
 **/
 const detector = async (event, ...args) => {
 
