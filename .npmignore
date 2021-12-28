@@ -11,3 +11,4 @@ node_modules/
 
 # Workspace environment file
 .vscode/
+.eslintrc.json
