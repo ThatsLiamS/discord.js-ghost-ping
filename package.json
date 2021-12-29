@@ -5,7 +5,12 @@
 	"main": "src/index.js",
 	"types": "./src/types/index.d.ts",
 	"scripts": {
-		"test": "node test/index.js"
+		"test": "node test/index.js",
+		"lint": "eslint src/**/*.js",
+		"lint:fix": "eslint src/**/*.js --fix",
+		"lint:test": "eslint test/**/*.js --fix",
+		"prepublishOnly": "npm run lint",
+		"postpublish": "npm run test"
 	},
 	"keywords": [],
 	"author": "ThatsLiamS",
@@ -19,6 +24,9 @@
 	},
 	"homepage": "https://github.com/ThatsLiamS/discord.js-ghost-ping#readme",
 	"devDependencies": {
+		"discord.js": "^13.4.0",
+		"discord.js-ghost-ping": "^2.0.3",
+		"dotenv": "^10.0.0",
 		"eslint": "^8.5.0"
 	}
 }
