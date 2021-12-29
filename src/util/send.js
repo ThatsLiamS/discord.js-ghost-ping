@@ -1,4 +1,5 @@
 const ignore = require(`${__dirname}/ignore`);
+const MessageProhibition = require(`${__dirname}/error`);
 
 /**
  * assigns custom field values for the embed
@@ -41,11 +42,8 @@ const custom = (object, message) => {
 **/
 const send = async (object, message, mentions) => {
 
-	if(object && object.ignore) {
-		if(ignore(object.ignore, message) == true) {
-			return false;
-		}
-	}
+	if(object && object.ignore && ignore(object.ignore, message) === true) return false;
+
 	const { title, color, footer, channel } = custom(object, message);
 
 	const embed = {
@@ -60,7 +58,7 @@ const send = async (object, message, mentions) => {
 	};
 
 	await channel.send({ embeds: [embed] }).catch(() => {
-		throw new Error('Unable to send message to channel');
+		throw new MessageProhibition(message.channel);
 	});
 
 	return true;
