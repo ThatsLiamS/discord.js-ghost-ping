@@ -29,13 +29,14 @@ const messageUpdate = async (oldMessage, newMessage, object) => {
 	newMessage.mentions.roles.forEach((role) => newArray.push(`${role}`));
 
 	let mentions = [];
+	
 	for (const mention of oldArray) {
 		if (!newArray.includes(mention)) {
 			mentions.push(mention);
 		}
 	}
 
-	if (mentions.length > 1) {return await send(object, newMessage, mentions.join(', '));}
+	if (mentions.length > 1) return await send(object, newMessage, mentions.join(', '));
 };
 
 
