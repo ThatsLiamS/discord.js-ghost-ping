@@ -4,33 +4,33 @@
 	<a href='https://npmjs.com/package/discord.js-ghost-ping'><img src='https://img.shields.io/bundlephobia/minzip/discord.js-ghost-ping.svg?maxAge=3600' alt='npm bundle size'></a>
 </div>
 
-# **About**
+# ❯ **About**
 
-**discord.js-ghost-ping** is a [Node.js](https://nodejs.org/en/) module that allows you to detect ghost pings inside of [discord.js v13](https://www.npmjs.com/package/discord.js)!
+[**`discord.js-ghost-ping`**](https://npmjs.com/package/discord.js-ghost-ping) is a [Node.js](https://nodejs.org/en/) module that allows you to detect 👻 "**ghost pings**" 👻 inside of [**discord.js v13**](https://www.npmjs.com/package/discord.js)!
 
 The package is guaranteed to detect all ghost pings and allows you to customize the embed sent: letting you change the title, colour, footer and the channel it's sent in.
 
 This package comes from the developer of verified bots: [**@Coin Flipper#1767**](https://discord.com/oauth2/authorize?client_id=668850031012610050&scope=bot&permissions=388160) and [**@autoMod#8328**](https://bit.ly/autoMod_invite)
 
-### What does the package do?
+### 🤔 What does the package do?
 
-- [x] Detect Ghost Pings
-- [x] Send Messages As the Bot
+- ✅ Detect Ghost Pings
+- ✅ Send Messages As the Bot
 
-### Help
+### 🙌 Help 
 
-If you don't understand something in the [documentation](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki), you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [Discord Server](https://discord.gg/2je9aJynqt).
+If you don't understand something in the [**`documentation`**](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki), you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [Discord Server](https://discord.gg/2je9aJynqt).
 
-# **Installation**
+# ❯ **Installation** 
 
 To install, do this command in your shell or command prompt then you are good to go! 
 ```
-npm install discord.js-ghost-ping
+$ npm install discord.js-ghost-ping
 ```
 
-# Example Usage
+# ❯ **Example Usage** 
 
-This is a working example. 
+👇 This is a working example. 👇
 ```js
 const Discord = require('discord.js')
 const client = new Discord.Client({
