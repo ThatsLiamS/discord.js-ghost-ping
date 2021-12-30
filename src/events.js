@@ -12,24 +12,28 @@ const missingParam = require(`${__dirname}/util/error`);
  * @returns {Promise<void>}
 **/
 const messageUpdate = async (oldMessage, newMessage, object) => {
-	if (oldMessage === undefined || newMessage === undefined || !oldMessage.mentions || !newMessage.mentions) throw new missingParam('Expected parameters \'oldMessage\', \'newMessage\' at position 1, 2');
+	/*
+	=> Optional Chaining
+	=> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining
+	*/
+	if (!oldMessage?.mentions || !newMessage?.mentions) throw new missingParam('Expected parameters \'oldMessage\', \'newMessage\' at position 1, 2');
+
 	if (oldMessage.author.bot || oldMessage.mentions.members.size === 0 && oldMessage.mentions.roles.size === 0) return false;
 
 
-	let newArray = []; let oldArray = [];
-	oldMessage.mentions.members.forEach((member) => {
-		if (!member.user.bot && member.id != oldMessage.author.id) {oldArray.push(`${member}`);}
-
+	let oldArray = oldMessage.mentions.members.map((member) => {
+		if (!member.user.bot && member.id != oldMessage.author.id) return member;
 	});
-	newMessage.mentions.members.forEach((member) => {
-		if (!member.user.bot && member.id != newMessage.author.id) {newArray.push(`${member}`);}
 
+	let newArray = newMessage.mentions.members.map((member) => {
+		if (!member.user.bot && member.id != newMessage.author.id) return member;
 	});
-	oldMessage.mentions.roles.forEach((role) => oldArray.push(`${role}`));
-	newMessage.mentions.roles.forEach((role) => newArray.push(`${role}`));
+
+	oldArray = oldMessage.mentions.roles.concat(oldArray);
+	newArray = newMessage.mentions.roles.concat(newArray);
 
 	let mentions = [];
-	
+
 	for (const mention of oldArray) {
 		if (!newArray.includes(mention)) {
 			mentions.push(mention);
@@ -63,7 +67,7 @@ const messageDelete = async (message, object) => {
 	});
 	message.mentions.roles.forEach((role) => mentions.push(role));
 
-	if (mentions == []) return false;
+	if (mentions.length < 1) return false;
 	return await send(object, message, mentions.join(', '));
 };
 
