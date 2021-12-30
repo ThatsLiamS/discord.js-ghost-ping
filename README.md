@@ -6,6 +6,15 @@
 	<a href='https://npmjs.com/package/discord.js-ghost-ping'><img src='https://img.shields.io/bundlephobia/minzip/discord.js-ghost-ping.svg?maxAge=3600' alt='npm bundle size'></a>
 </div>
 
+# **Getting Started** 
+
+- [About](#-about)
+	- [What does the package do]()
+	- [Help]()
+- [Demo](#-demo)
+- [Installation](#-installation)
+- [Example usage]()
+
 # ❯ **About**
 
 [**`discord.js-ghost-ping`**](https://npmjs.com/package/discord.js-ghost-ping) is a [Node.js](https://nodejs.org/en/) module that allows you to detect 👻 "**ghost pings**" 👻 inside of [**discord.js v13**](https://www.npmjs.com/package/discord.js)!
