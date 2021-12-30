@@ -19,13 +19,22 @@ This package comes from the developer of verified bots: [**@Coin Flipper#1767**]
 
 ### 🙌 Help 
 
-If you don't understand something in the [**`documentation`**](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki), you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [Discord Server](https://discord.gg/2je9aJynqt).
+If you don't understand something in the [**`documentation`**](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki), you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [**`Discord Server`**](https://discord.gg/2je9aJynqt).
+
+# ❯ **Demo**
+
+<div align='center'><img src='https://i.imgur.com/yX43qdV.gif'></div>
 
 # ❯ **Installation** 
 
-To install, do this command in your shell or command prompt then you are good to go! 
+Install with [npm](https://www.npmjs.com/) :
 ```
-$ npm install discord.js-ghost-ping
+$ npm install discord.js-ghost-ping --save
+```
+
+Install with [yarn](https://yarnpkg.com/) :
+```
+$ yarn add discord.js-ghost-ping
 ```
 
 # ❯ **Example Usage** 
