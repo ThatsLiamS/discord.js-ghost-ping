@@ -6,10 +6,10 @@
 	<a href='https://npmjs.com/package/discord.js-ghost-ping'><img src='https://img.shields.io/bundlephobia/minzip/discord.js-ghost-ping.svg?maxAge=3600' alt='npm bundle size'></a>
 </div>
 
-# **Getting Started** 
+# ❯ **Getting Started** 
 
 - [About](#-about)
-	- [What does the package do](#-what-does-the-package-do)
+	- [What does the package do ?](#-what-does-the-package-do)
 	- [Help](#-help)
 - [Demo](#-demo)
 - [Installation](#-installation)
