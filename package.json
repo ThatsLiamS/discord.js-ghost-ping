@@ -11,7 +11,7 @@
 		"lint:test": "eslint test/**/*.js --fix",
 		"prepublishOnly": "npm run lint",
 		"postpublish": "npm run test"
-	},
+	}, 
 	"keywords": [],
 	"author": "ThatsLiamS",
 	"license": "MIT",

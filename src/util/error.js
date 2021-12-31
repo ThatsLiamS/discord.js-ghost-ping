@@ -11,6 +11,12 @@ class missingParam extends Error {
 	}
 }
 
+/**
+ * For Custom Message Prohibition Error
+ *
+ * @param {string} channel - The channel that the message was tried to send to
+ *
+ */
 class MessageProhibition extends Error {
 	constructor(channel) {
 		super(` Unable to send message to channel :  ${channel}`);

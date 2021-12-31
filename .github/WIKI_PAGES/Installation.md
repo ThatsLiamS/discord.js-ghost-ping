@@ -1,4 +1,4 @@
-## Installation
+## Installation 
 Before you can use [**discord.js-ghost-ping**](https://www.npmjs.com/package/discord.js-ghost-ping), you have to install it. 
 
 ## Steps

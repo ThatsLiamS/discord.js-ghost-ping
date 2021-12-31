@@ -1,5 +1,5 @@
 @echo off
-cls
+cls 
 title Git commit to remote repo
 color a
 echo Starting Git Commit

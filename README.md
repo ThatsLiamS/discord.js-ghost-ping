@@ -28,7 +28,7 @@ This package comes from the developer of verified bots: [**@Coin Flipper#1767**]
 - ✅ Detect Ghost Pings
 - ✅ Send Messages As the Bot
 
-### 🙌 Help 
+### 🙌 Help  
 
 If you don't understand something in the [**`documentation`**](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki), you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [**`Discord Server`**](https://discord.gg/2je9aJynqt).
 

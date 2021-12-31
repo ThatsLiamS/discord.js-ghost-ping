@@ -32,13 +32,7 @@ const messageUpdate = async (oldMessage, newMessage, object) => {
 	oldArray = oldMessage.mentions.roles.concat(oldArray);
 	newArray = newMessage.mentions.roles.concat(newArray);
 
-	let mentions = [];
-
-	for (const mention of oldArray) {
-		if (!newArray.includes(mention)) {
-			mentions.push(mention);
-		}
-	}
+	let mentions = oldArray.filter((member) => !newArray.includes(member));
 
 	if (mentions.length > 1) return await send(object, newMessage, mentions.join(', '));
 };

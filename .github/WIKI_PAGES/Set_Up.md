@@ -1,4 +1,4 @@
-# Set up
+# Set up 
 Now, we have the package installed on our machine - we have to set it up; otherwise, it won't do anything.
 
 ### Define the Package

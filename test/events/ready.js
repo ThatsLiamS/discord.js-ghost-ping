@@ -10,6 +10,6 @@ module.exports = {
 		client.user.setPresence({
 			status: 'online',
 			activities: [{ type: 'PLAYING', name: 'TEST' }],
-		})
+		});
 	}
 };
