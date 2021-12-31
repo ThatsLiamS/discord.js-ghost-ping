@@ -54,19 +54,18 @@ const messageUpdate = async (oldMessage, newMessage, object) => {
 **/
 const messageDelete = async (message, object) => {
 
-	if (message === undefined || !message.mentions) {throw new Error('Expected parameter \'message\' at position 1');}
+	if (!message?.mentions) throw new Error('Expected parameter \'message\' at position 1');
 
-	if (message.author.bot || message.mentions.members.size == 0 && message.mentions.roles.size == 0) {return false;}
+	if (message.author.bot || message.mentions.members.size == 0 && message.mentions.roles.size == 0) return false;
 
 
-	let mentions = [];
-
-	message.mentions.members.forEach((member) => {
-		if (!member.user.bot && member.id != message.author.id) {mentions.push(member);}
-
+	let mentions = message.mentions.members.map((member) => {
+		if (!member.user.bot && member.id != message.author.id) return member;
 	});
-	message.mentions.roles.forEach((role) => mentions.push(role));
-
+	// message.mentions.roles.forEach((role) => mentions.push(role));
+	console.log(mentions);
+	console.log(message.mentions.roles);
+	mentions = message.mentions.roles.concat(mentions);
 	if (mentions.length < 1) return false;
 	return await send(object, message, mentions.join(', '));
 };
