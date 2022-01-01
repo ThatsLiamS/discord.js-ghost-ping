@@ -9,11 +9,9 @@ const events = require(`${__dirname}/events`);
 **/
 const detector = async (event, ...args) => {
 
-	if(event && events[event]) {
-		return await events[event](...args);
-	}
+	if (!event || !events[event]) throw new Error('Expected parameter \'event\' at position 0');
+	return await events[event](...args);
 
-	throw new Error('Expected parameter \'Event\' at position 0');
 };
 
 module.exports = { detector };
