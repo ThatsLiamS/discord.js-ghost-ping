@@ -41,11 +41,8 @@ const custom = (object, message) => {
 **/
 const send = async (object, message, mentions) => {
 
-	if(object && object.ignore) {
-		if(ignore(object.ignore, message) == true) {
-			return false;
-		}
-	}
+	if(object && object.ignore && ignore(object.ignore, message) === true) return false;
+
 	const { title, color, footer, channel } = custom(object, message);
 
 	const embed = {
