@@ -10,10 +10,7 @@ const send = require(`${__dirname}/util/send`);
  * @returns {Promise<void>}
 **/
 const messageUpdate = async (oldMessage, newMessage, object) => {
-	/*
-	=> Optional Chaining
-	=> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining
-	*/
+	
 	if (!oldMessage?.mentions || !newMessage?.mentions) throw new Error('Expected parameters \'oldMessage\', \'newMessage\' at position 1, 2');
 
 	if (oldMessage.author.bot || oldMessage.mentions.members.size === 0 && oldMessage.mentions.roles.size === 0) return false;
