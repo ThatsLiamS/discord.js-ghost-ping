@@ -32,12 +32,12 @@ If you don't understand something in the [**`documentation`**](https://github.co
 
 # ❯ **Installation** 
 
-Install with [npm](https://www.npmjs.com/) :
+Install with [npm](https://www.npmjs.com/):
 ```
 $ npm install discord.js-ghost-ping --save
 ```
 
-Install with [yarn](https://yarnpkg.com/) :
+Install with [yarn](https://yarnpkg.com/):
 ```
 $ yarn add discord.js-ghost-ping
 ```
