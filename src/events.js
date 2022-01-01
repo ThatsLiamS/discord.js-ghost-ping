@@ -1,6 +1,5 @@
 const send = require(`${__dirname}/util/send`);
 
-
 /**
  * Handles the messageUpdate event
  *
@@ -11,36 +10,26 @@ const send = require(`${__dirname}/util/send`);
  * @returns {Promise<void>}
 **/
 const messageUpdate = async (oldMessage, newMessage, object) => {
-	if (oldMessage === undefined || newMessage == undefined || !oldMessage.mentions || !newMessage.mentions) {
-		throw new Error('Expected parameters \'oldMessage\', \'newMessage\' at position 1, 2');
-	}
-	if(oldMessage.author.bot || oldMessage.mentions.members.size == 0 && oldMessage.mentions.roles.size == 0) {
-		return false;
-	}
+	
+	if (!oldMessage?.mentions || !newMessage?.mentions) throw new Error('Expected parameters \'oldMessage\', \'newMessage\' at position 1, 2');
 
-	let newArray = []; let oldArray = [];
-	oldMessage.mentions.members.forEach((member) => {
-		if(!member.user.bot && member.id != oldMessage.author.id) {
-			oldArray.push(`${member}`);
-		}
+	if (oldMessage.author.bot || oldMessage.mentions.members.size === 0 && oldMessage.mentions.roles.size === 0) return false;
+
+
+	let oldArray = oldMessage.mentions.members.map((member) => {
+		if (!member.user.bot && member.id != oldMessage.author.id) return member;
 	});
-	newMessage.mentions.members.forEach((member) => {
-		if(!member.user.bot && member.id != newMessage.author.id) {
-			newArray.push(`${member}`);
-		}
+
+	let newArray = newMessage.mentions.members.map((member) => {
+		if (!member.user.bot && member.id != newMessage.author.id) return member;
 	});
-	oldMessage.mentions.roles.forEach((role) => oldArray.push(`${role}`));
-	newMessage.mentions.roles.forEach((role) => newArray.push(`${role}`));
 
-	let mentions = [];
-	for(const mention of oldArray) {
-		if(!newArray.includes(mention)) {
-			mentions.push(mention);
-		}
-	}
+	oldArray = oldMessage.mentions.roles.concat(oldArray);
+	newArray = newMessage.mentions.roles.concat(newArray);
 
-	if(mentions == []) { return false; }
-	return await send(object, newMessage, mentions.join(', '));
+	let mentions = oldArray.filter((member) => !newArray.includes(member));
+
+	if (mentions.length > 1) return await send(object, newMessage, mentions.join(', '));
 };
 
 
@@ -54,23 +43,16 @@ const messageUpdate = async (oldMessage, newMessage, object) => {
 **/
 const messageDelete = async (message, object) => {
 
-	if(message === undefined || !message.mentions) {
-		throw new Error('Expected parameter \'message\' at position 1');
-	}
-	if(message.author.bot || message.mentions.members.size == 0 && message.mentions.roles.size == 0) {
-		return false;
-	}
+	if (!message?.mentions) throw new Error('Expected parameter \'message\' at position 0');
 
-	let mentions = [];
+	if (message.author.bot || message.mentions.members.size == 0 && message.mentions.roles.size == 0) return false;
 
-	message.mentions.members.forEach((member) => {
-		if(!member.user.bot && member.id != message.author.id) {
-			mentions.push(member);
-		}
+
+	let mentions = message.mentions.members.map((member) => {
+		if (!member.user.bot && member.id != message.author.id) return member;
 	});
 	message.mentions.roles.forEach((role) => mentions.push(role));
-
-	if(mentions == []) { return false; }
+	if (mentions.length < 1) return false;
 	return await send(object, message, mentions.join(', '));
 };
 
