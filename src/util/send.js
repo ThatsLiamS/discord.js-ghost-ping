@@ -50,7 +50,7 @@ const send = async (object, message, mentions) => {
 		author: { name: `${message.author.tag}`, icon_url: `${message.author.displayAvatarURL()}`, },
 		fields: [
 			{ name: '**Channel:**', value: `${message.channel}`, inline: true },
-			{ name: '**Mentions:**', value: `${mentions}`, inline: true },
+			{ name: '**Mentions:**', value: `${mentions.join(' ')}`, inline: true },
 		],
 		timestamp: new Date(),
 		footer: { text: `${footer}`, },
