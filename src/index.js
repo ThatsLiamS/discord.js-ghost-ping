@@ -1,11 +1,11 @@
-const events = require(`${__dirname}/events`);
+const events = require('./events.js');
 
 /**
  * handles and executes event files
  *
  * @param {string} event - The message event that was triggered
  *
- * @returns {Promise<void>}
+ * @returns {Promise<void>|boolean}
 **/
 const detector = async (event, ...args) => {
 

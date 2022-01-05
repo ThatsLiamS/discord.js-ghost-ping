@@ -1,4 +1,4 @@
-const ignore = require(`${__dirname}/ignore`);
+const ignore = require('./ignore.js');
 
 /**
  * assigns custom field values for the embed
@@ -37,7 +37,7 @@ const custom = (object, message) => {
  * @param {object} message - Discord message object
  * @param {string} mentions - String of all ghost-pinged mentions
  *
- * @returns {boolean}
+ * @returns {Promise<void>|boolean}
 **/
 const send = async (object, message, mentions) => {
 

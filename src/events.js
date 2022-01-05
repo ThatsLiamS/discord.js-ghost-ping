@@ -1,4 +1,4 @@
-const send = require(`${__dirname}/util/send`);
+const send = require('./util/send.js');
 
 const validate = (member, message) => {
 	if (!member.user.bot && member.id != message.author.id) return member;
@@ -11,7 +11,7 @@ const validate = (member, message) => {
  * @param {object} newMessage - Updated discord message object
  * @param {object} object - optional customisation object
  *
- * @returns {Promise<void>}
+ * @returns {Promise<void>|boolean}
 **/
 const messageUpdate = async (oldMessage, newMessage, object) => {
 
@@ -37,7 +37,7 @@ const messageUpdate = async (oldMessage, newMessage, object) => {
  * @param {object} message - Discord message object
  * @param {object} object - optional customisation
  *
- * @returns {Promise<void>}
+ * @returns {Promise<void>|boolean}
 **/
 const messageDelete = async (message, object) => {
 
