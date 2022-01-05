@@ -14,11 +14,11 @@
 
 # ❯ **About**
 
-[**`discord.js-ghost-ping`**](https://npmjs.com/package/discord.js-ghost-ping) is a [Node.js](https://nodejs.org/en/) module that allows you to detect "**ghost pings**" inside of [**discord.js v13**](https://www.npmjs.com/package/discord.js)!
+[**`discord.js-ghost-ping`**](https://npmjs.com/package/discord.js-ghost-ping) is a [Node.js](https://nodejs.org/en/) module that allows you to detect **ghost pings** inside of [**discord.js v13**](https://www.npmjs.com/package/discord.js)!
 
 The package is guaranteed to detect all ghost pings and allows you to customize the embed sent: letting you change the title, colour, footer and the channel it's sent in.
 
-This package comes from the developer of verified bots: [**@Coin Flipper#1767**](https://discord.com/oauth2/authorize?client_id=668850031012610050&scope=bot&permissions=388160) and [**@autoMod#8328**](https://bit.ly/autoMod_invite)
+This package comes from the developer of verified bots: [**@Coin Flipper#1767**](https://discord.com/oauth2/authorize?client_id=668850031012610050&scope=bot&permissions=388160) and [**@autoMod#8328**](https://automod.liamskinner.co.uk/invite)
 
 ### What does the package do?
 
@@ -34,7 +34,7 @@ If you don't understand something in the [**`documentation`**](https://github.co
 
 Install with [npm](https://www.npmjs.com/):
 ```
-$ npm install discord.js-ghost-ping --save
+$ npm install discord.js-ghost-ping
 ```
 
 Install with [yarn](https://yarnpkg.com/):
@@ -46,20 +46,20 @@ $ yarn add discord.js-ghost-ping
 
  This is a working example.
 ```js
-const Discord = require('discord.js')
+const Discord = require('discord.js');
 const client = new Discord.Client({
-    intents: ['GUILD_MESSAGES'],
+    intents: ['GUILD', 'GUILD_MESSAGES'],
 })
 
-const GhostPing = require('discord.js-ghost-ping')
+const GhostPing = require('discord.js-ghost-ping');
 
 client.on('messageDelete', async (message) => {
-	await GhostPing.detector('messageDelete', message)
+	await GhostPing.detector('messageDelete', message);
 })
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
-	await GhostPing.detector('messageUpdate', oldMessage, newMessage)
+	await GhostPing.detector('messageUpdate', oldMessage, newMessage);
 })
 
-client.login(process.env['MyToken'])
+client.login(process.env['MyToken']);
 ```
