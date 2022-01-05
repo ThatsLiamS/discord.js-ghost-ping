@@ -3,7 +3,7 @@
 	"version": "2.1.0",
 	"description": "Detect Ghost Pings inside of discord.js v13!",
 	"main": "src/index.js",
-	"types": "./src/types/index.d.ts",
+	"types": "./src/typings/index.d.ts",
 	"scripts": {
 		"test": "node test/index.js"
 	},
