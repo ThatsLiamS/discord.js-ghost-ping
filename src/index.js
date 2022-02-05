@@ -5,12 +5,12 @@ const events = require('./events.js');
  *
  * @param {string} event - The message event that was triggered
  *
- * @returns {Promise<void>|boolean}
+ * @returns {boolean}
 **/
-const detector = async (event, ...args) => {
+const detector = (event, ...args) => {
 
 	if (!event || !events[event]) throw new Error('Expected parameter \'event\' at position 0');
-	return await events[event](...args);
+	return events[event](...args);
 
 };
 

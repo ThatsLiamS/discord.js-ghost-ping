@@ -53,12 +53,12 @@ const client = new Discord.Client({
 
 const GhostPing = require('discord.js-ghost-ping');
 
-client.on('messageDelete', async (message) => {
-	await GhostPing.detector('messageDelete', message);
+client.on('messageDelete', (message) => {
+	GhostPing.detector('messageDelete', message);
 })
 
-client.on('messageUpdate', async (oldMessage, newMessage) => {
-	await GhostPing.detector('messageUpdate', oldMessage, newMessage);
+client.on('messageUpdate', (oldMessage, newMessage) => {
+	GhostPing.detector('messageUpdate', oldMessage, newMessage);
 })
 
 client.login(process.env['MyToken']);

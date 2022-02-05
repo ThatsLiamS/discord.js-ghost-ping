@@ -37,9 +37,9 @@ const custom = (object, message) => {
  * @param {object} message - Discord message object
  * @param {string} mentions - String of all ghost-pinged mentions
  *
- * @returns {Promise<void>|boolean}
+ * @returns {boolean}
 **/
-const send = async (object, message, mentions) => {
+const send = (object, message, mentions) => {
 
 	if(object && object.ignore && ignore(object.ignore, message) === true) return false;
 
@@ -56,11 +56,12 @@ const send = async (object, message, mentions) => {
 		footer: { text: `${footer}`, },
 	};
 
-	await channel.send({ embeds: [embed] }).catch(() => {
+	return channel.send({ embeds: [embed] }).then(() => {
+		return true;
+	})
+	.catch(() => {
 		throw new Error('Unable to send message to channel');
 	});
-
-	return true;
 
 };
 
