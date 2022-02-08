@@ -6,7 +6,7 @@ Before you can use [**discord.js-ghost-ping**](https://www.npmjs.com/package/dis
 1. Open the CMD / shell / terminal,
 2. use `cd folder-name` and `cd ..` to navigate the directory structure,
 3. Locate the root directory of your program,
-4. Run either command shown below.
+4. Run the command shown below.
 
 ```js
 /* https://www.npmjs.com/ */

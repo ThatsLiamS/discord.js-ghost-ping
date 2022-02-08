@@ -5,7 +5,7 @@ const validate = (member, message) => {
 };
 const filter = (r) => {
 	if (r.toString().startsWith('<')) return r.toString();
-}
+};
 
 /**
  * Handles the messageUpdate event
@@ -27,7 +27,7 @@ const messageUpdate = (oldMessage, newMessage, object) => {
 	let newArray = newMessage.mentions.members.map(member => validate(member, newMessage));
 	newArray = [...newMessage.mentions.roles.map(x => filter(x)), ...newArray];
 
-	const mentions = oldArray.filter((mention) => !newArray.includes(mention));
+	const mentions = oldArray.filter((mention) => !newArray.includes(mention) && mention.toString.startsWith('<'));
 
 	if (mentions.length < 1) return false;
 	return send(object, newMessage, mentions);
