@@ -19,6 +19,6 @@
 	},
 	"homepage": "https://github.com/ThatsLiamS/discord.js-ghost-ping#readme",
 	"devDependencies": {
-		"eslint": "^8.5.0"
+		"eslint": "^8.12.0"
 	}
 }
