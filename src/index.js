@@ -10,7 +10,7 @@ const events = require('./events.js');
 const detector = (event, ...args) => {
 
 	if (!event || !events[event]) throw new Error('Expected parameter \'event\' at position 0');
-	return events[event](...args);
+	return events[event](...args) || false;
 
 };
 

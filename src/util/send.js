@@ -41,7 +41,7 @@ const custom = (object, message) => {
 **/
 const send = (object, message, mentions) => {
 
-	if(object && object.ignore && ignore(object.ignore, message) === true) return false;
+	if(object?.ignore && ignore(object.ignore, message) === true) return false;
 
 	const { title, color, footer, channel } = custom(object, message);
 
@@ -58,8 +58,7 @@ const send = (object, message, mentions) => {
 
 	return channel.send({ embeds: [embed] }).then(() => {
 		return true;
-	})
-	.catch(() => {
+	}).catch(() => {
 		throw new Error('Unable to send message to channel');
 	});
 
