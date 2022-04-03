@@ -2,10 +2,12 @@ const send = require('./util/send.js');
 
 const validate = (member, message) => {
 	if (!member.user.bot && member.id != message.author.id) return member.toString();
+	return null;
 };
 const filter = (r) => {
 	if (r.toString().startsWith('<')) return r.toString();
-}
+	return null;
+};
 
 /**
  * Handles the messageUpdate event
@@ -29,7 +31,7 @@ const messageUpdate = (oldMessage, newMessage, object) => {
 
 	const mentions = oldArray.filter((mention) => !newArray.includes(mention));
 
-	if (mentions.length < 1) return false;
+	if (!mentions || mentions.length < 1) return false;
 	return send(object, newMessage, mentions);
 };
 
