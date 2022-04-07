@@ -1,13 +1,7 @@
 const send = require('./util/send.js');
 
-const validate = (member, message) => {
-	if (!member.user.bot && member.id != message.author.id) return member.toString();
-	return null;
-};
-const filter = (r) => {
-	if (r.toString().startsWith('<')) return r.toString();
-	return null;
-};
+const validate = (member, message) => (!member.user.bot && member.id != message.author.id) ? member.toString() : null;
+const filter = (r) => (r.toString().startsWith('<')) ? r.toString() : null;
 
 /**
  * Handles the messageUpdate event
@@ -52,7 +46,7 @@ const messageDelete = (message, object) => {
 	let mentions = message.mentions.members.map(member => validate(member, message));
 	mentions = [...message.mentions.roles.map(x => filter(x)), ...mentions];
 
-	if (mentions.length < 1) return false;
+	if (!mentions || mentions.length < 1) return false;
 	return send(object, message, mentions);
 };
 
