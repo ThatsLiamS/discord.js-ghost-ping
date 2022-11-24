@@ -53,5 +53,5 @@ const messageDelete = (message, object) => {
 
 module.exports = {
 	messageUpdate,
-	messageDelete
+	messageDelete,
 };
