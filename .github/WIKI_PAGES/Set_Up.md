@@ -36,24 +36,18 @@ The variable `GhostPing` is an non-async function.
 #### **Working Example:**
 ```js
 const { Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.GuildMessages] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 
 const GhostPing = require('discord.js-ghost-ping');
 
 client.on('messageDelete', (...args) => {
-	GhostPing('messageDelete', ...args)
-		.then((result) => {
-			/* Format message to send */
-		})
-		.catch(() => void);
+	const res = GhostPing('messageDelete', ...args);
+	console.log(res?.mentions || res);
 });
 
 client.on('messageUpdate', (...args) => {
-	GhostPing('messageUpdate', ...args)
-		.then((result) => {
-			/* Format message to send */
-		})
-		.catch(() => void);
+	const res = GhostPing('messageUpdate', ...args);
+	console.log(res?.mentions || res);
 });
 
 client.login(process.env['MyToken']);
