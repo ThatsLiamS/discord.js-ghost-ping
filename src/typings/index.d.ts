@@ -1,4 +1,6 @@
 declare module "discord.js-ghost-ping" {
-	export function detector(event: 'messageDelete', message: object, customisation?: object): boolean;
-	export function detector(event: 'messageUpdate', message: object, newMessage: object, customisation?: object): boolean;
-};
+	function detector(event: 'messageDelete', message: object): object | boolean;
+	function detector(event: 'messageUpdate', oldMessage: object, newMessage: object): object | boolean;
+
+	export default detector;
+}
