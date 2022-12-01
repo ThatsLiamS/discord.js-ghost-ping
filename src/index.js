@@ -5,7 +5,7 @@ const events = require('./events.js');
  *
  * @param {string} event - The message event that was triggered
  *
- * @returns {boolean}
+ * @returns {object|false}
 **/
 const detector = (event, ...args) => {
 
@@ -14,4 +14,4 @@ const detector = (event, ...args) => {
 
 };
 
-module.exports = { detector };
+module.exports = detector;
