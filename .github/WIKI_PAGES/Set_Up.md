@@ -22,7 +22,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 })
 ```
 
-The variable `GhostPing` has an attribute `detector()`.
+The variable `GhostPing` is an non-async function.
 #### **Required Parameters:**
 1. Event Type: [`'messageDelete'`](https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-messageDelete) or [`'messageUpdate'`](https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-messageUpdate)
 
@@ -35,20 +35,26 @@ The variable `GhostPing` has an attribute `detector()`.
 
 #### **Working Example:**
 ```js
-const Discord = require('discord.js')
-const client = new Discord.Client({
-    intents: ['GUILD_MESSAGES'],
-})
+const { Client, GatewayIntentBits } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.GuildMessages] });
 
-const GhostPing = require('discord.js-ghost-ping')
+const GhostPing = require('discord.js-ghost-ping');
 
-client.on('messageDelete', message => {
-    GhostPing.detector('messageDelete', message)
-})
+client.on('messageDelete', (...args) => {
+	GhostPing('messageDelete', ...args)
+		.then((result) => {
+			/* Format message to send */
+		})
+		.catch(() => void);
+});
 
-client.on('messageUpdate', (oldMessage, newMessage) => {
-    GhostPing.detector('messageUpdate', oldMessage, newMessage)
-})
+client.on('messageUpdate', (...args) => {
+	GhostPing('messageUpdate', ...args)
+		.then((result) => {
+			/* Format message to send */
+		})
+		.catch(() => void);
+});
 
-client.login(process.env['MyToken'])
+client.login(process.env['MyToken']);
 ```

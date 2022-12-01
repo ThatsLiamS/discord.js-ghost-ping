@@ -14,11 +14,9 @@
 
 # ❯ **About**
 
-[**`discord.js-ghost-ping`**](https://npmjs.com/package/discord.js-ghost-ping) is a [Node.js](https://nodejs.org/en/) module that allows you to detect **ghost pings** inside of [**discord.js v13**](https://www.npmjs.com/package/discord.js)!
+[**`discord.js-ghost-ping`**](https://npmjs.com/package/discord.js-ghost-ping) is a [Node.js](https://nodejs.org/en/) module that allows you to detect **ghost pings** inside of [**discord.js v14**](https://www.npmjs.com/package/discord.js)!
 
-The package is guaranteed to detect all ghost pings and allows you to customize the embed sent: letting you change the title, colour, footer and the channel it's sent in.
-
-This package comes from the developer of verified bots: [**@Coin Flipper#1767**](https://discord.com/oauth2/authorize?client_id=668850031012610050&scope=bot&permissions=388160) and [**@autoMod#8328**](https://automod.liamskinner.co.uk/invite)
+This package comes from the developer of verified bots: [**@Coin Flipper#1767 - 650k users**](https://discord.com/api/oauth2/authorize?client_id=668850031012610050&permissions=388160&scope=bot%20applications.commands) and [**@autoMod#8328 - 55k users**](https://automod.liamskinner.co.uk/invite)
 
 ### What does the package do?
 
@@ -46,20 +44,26 @@ $ yarn add discord.js-ghost-ping
 
  This is a working example.
 ```js
-const Discord = require('discord.js');
-const client = new Discord.Client({
-    intents: ['GUILD', 'GUILD_MESSAGES'],
-})
+const { Client, GatewayIntentBits } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.GuildMessages] });
 
 const GhostPing = require('discord.js-ghost-ping');
 
-client.on('messageDelete', (message) => {
-	GhostPing.detector('messageDelete', message);
-})
+client.on('messageDelete', (...args) => {
+	GhostPing('messageDelete', ...args)
+		.then((result) => {
+			/* Format message to send */
+		})
+		.catch(() => void);
+});
 
-client.on('messageUpdate', (oldMessage, newMessage) => {
-	GhostPing.detector('messageUpdate', oldMessage, newMessage);
-})
+client.on('messageUpdate', (...args) => {
+	GhostPing('messageUpdate', ...args)
+		.then((result) => {
+			/* Format message to send */
+		})
+		.catch(() => void);
+});
 
 client.login(process.env['MyToken']);
 ```
