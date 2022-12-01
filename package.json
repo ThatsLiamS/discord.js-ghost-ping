@@ -1,6 +1,6 @@
 {
 	"name": "discord.js-ghost-ping",
-	"version": "2.4.4",
+	"version": "3.0.0",
 	"description": "Detect Ghost Pings inside of discord.js v14!",
 	"main": "src/index.js",
 	"types": "./src/typings/index.d.ts",
