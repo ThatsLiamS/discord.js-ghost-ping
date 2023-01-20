@@ -32,7 +32,9 @@ const formatReturn = (message, mentions) => {
 const messageUpdate = (oldMessage, newMessage) => {
 
 	if (!oldMessage?.mentions || !newMessage?.mentions) throw new Error('Expected parameters \'oldMessage\', \'newMessage\' at position 1, 2');
-	if (oldMessage.author.bot || oldMessage.mentions.members.size === 0 && oldMessage.mentions.roles.size === 0) return false;
+	if (oldMessage.author?.bot
+		|| (oldMessage.mentions?.members?.size == 0 || !oldMessage.mentions?.members?.size)
+		&& (oldMessage.mentions?.roles?.size == 0) || !oldMessage.mentions?.roles?.size) return false;
 
 	const oldArray = [
 		...oldMessage.mentions.roles.map(x => filter(x)),
@@ -61,7 +63,9 @@ const messageUpdate = (oldMessage, newMessage) => {
 const messageDelete = (message) => {
 
 	if (!message?.mentions) throw new Error('Expected parameter \'message\' at position 1');
-	if (message.author.bot || message.mentions.members.size == 0 && message.mentions.roles.size == 0) return false;
+	if (message.author?.bot
+		|| (message.mentions?.members?.size == 0 || !message.mentions?.members?.size)
+		&& (message.mentions?.roles?.size == 0) || !message.mentions?.roles?.size) return false;
 
 	const mentions = [
 		...message.mentions.roles.map(x => filter(x)),
