@@ -4,35 +4,64 @@
 	<a href='https://npmjs.com/package/discord.js-ghost-ping'><img src='https://img.shields.io/bundlephobia/minzip/discord.js-ghost-ping.svg?maxAge=3600' alt='npm bundle size'></a>
 </div>
 
-# **Wiki**
+# **GhostPing Wiki**
 
-### **About**
 
-[**`discord.js-ghost-ping`**](https://npmjs.com/package/discord.js-ghost-ping) is a [Node.js](https://nodejs.org/en/) module that allows you to detect **ghost pings** inside of [**discord.js v14**](https://www.npmjs.com/package/discord.js)!
+## **Installation**
 
-This package comes from the developer of verified bots: [**@Coin Flipper#1767 - 650k users**](https://discord.com/api/oauth2/authorize?client_id=668850031012610050&permissions=388160&scope=bot%20applications.commands) and [**@autoMod#8328 - 55k users**](https://automod.liamskinner.co.uk/invite)
-
-### Example Usage
-
-```js
-const { Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
-
-const GhostPing = require('discord.js-ghost-ping');
-
-client.on('messageDelete', (...args) => {
-	const res = GhostPing('messageDelete', ...args);
-	console.log(res?.mentions || res);
-});
-
-client.on('messageUpdate', (...args) => {
-	const res = GhostPing('messageUpdate', ...args);
-	console.log(res?.mentions || res);
-});
-
-client.login(process.env['MyToken']);
+1. Open the CMD / Shell / Terminal
+2. Naviagate to the project's Root Directory
+3. Run either command:
+```bash
+$ npm install discord.js-ghost-ping
+$ yarn add discord.js-ghost-ping
 ```
 
-### help
+## **Usage**
 
-If you don't understand something in the [**`documentation`**](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki), you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [**`Discord Server`**](https://discord.gg/2je9aJynqt).
+1. Import the package
+```javascript
+const GhostPing = require('discord.js-ghost-ping');
+import GhostPing from 'discord.js-ghost-ping';
+```
+
+2. The package requires two detectors in separate DiscordJs events to work correctly because ghost pings can occur in deleted **and** updated/edited messages. The [`messageDelete`](https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-messageDelete) and [`messageUpdate`](https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-messageUpdate). 
+```javascript
+client.on('messageDelete', message => { 
+    ...
+})
+client.on('messageUpdate', (oldMessage, newMessage) => {
+    ...
+})
+```
+
+3. Add the detector
+
+The Detector Function requires **2 (or 3)** parameters. The first is the DiscordJS Event ([`messageDelete`](https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-messageDelete) or [`messageUpdate`](https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-messageUpdate)). The second is the Discord Message object (`message` or `oldMessage`, `newMessage`).
+```javascript
+client.on('messageDelete', message => { 
+    const result = GhostPing('messageDelete', message);
+
+	/* Use result to send your own alert */
+	message.channel.send({ content: `You have been **ghost pinged** - ${result.mentions}` });
+})
+```
+
+## **Return Object**
+
+```
+{
+	author:      <Object>     |  Discord User
+	channel:     <Object>     |  Discord TextChannel
+	guild:       <Object>     |  Discord Guild
+
+	message:     <Object>     |  Discord Message
+	mentions:  Array<String>  |  ['<@0000>', '<@0000>']
+}
+```
+## **Support**
+
+Thanks for checking out the documentation. If you require further assistance, please either
+
+- Open a **[GitHub Issue](https://github.com/ThatsLiamS/discord.js-ghost-ping)**
+- Join our **[Support Server](https://discord.gg/2je9aJynqt)**

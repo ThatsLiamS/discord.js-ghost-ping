@@ -7,26 +7,24 @@
 # ❯ **Getting Started** 
 
 - [About](#-about)
-	- [What does the package do ?](#-what-does-the-package-do)
-	- [Help](#-help)
+- [Help](#-help)
 - [Installation](#-installation)
 - [Example usage](#-example-usage)
 
 # ❯ **About**
 
-[**`discord.js-ghost-ping`**](https://npmjs.com/package/discord.js-ghost-ping) is a [Node.js](https://nodejs.org/en/) module that allows you to detect **ghost pings** inside of [**discord.js v14**](https://www.npmjs.com/package/discord.js)!
+Introducing a powerful new tool for Discord bot developers: the **Ghost Ping Detector**! Designed by a 4-time verified bot developer, reaching millions of users across Discord, this package is the ultimate solution for detecting and alerting users to ghost pings.
 
-This package comes from the developer of verified bots: [**@Coin Flipper#1767 - 650k users**](https://discord.com/api/oauth2/authorize?client_id=668850031012610050&permissions=388160&scope=bot%20applications.commands) and [**@autoMod#8328 - 55k users**](https://automod.liamskinner.co.uk/invite)
+With the Ghost Ping Detector, your bot can quickly and easily detect when a user has been ghost pinged in a channel. Whenever a recent message with a mention has been deleted, the Ghost Ping Detector will immediately alert your bot, so you can provide a helpful message letting them know that they were ghost pinged.
 
-### What does the package do?
+This package is easy to install and integrate into your existing Discord bot, and is compatible with all major DiscordJS versions. Whether you're a seasoned bot developer or just getting started, the Ghost Ping Detector is the perfect tool to help you create a better, more responsive bot that users will love.
 
-- [x] Detect Ghost Pings
-- [x] Send Messages As the Bot
+So why wait? Install the Ghost Ping Detector today and take your Discord bot to the next level!
 
-### Help  
 
-If you don't understand something in the [**`documentation`**](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki), you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [**`Discord Server`**](https://discord.gg/2je9aJynqt).
+# ❯ **Help**  
 
+For more information on how to use the package, please refer to the complete documentation on the [repository wiki](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki) pages. If you have any questions or run into any issues, we also have a [Discord server](https://discord.gg/2je9aJynqt) where you can ask the community and the developer for help.
 
 # ❯ **Installation** 
 
@@ -40,6 +38,7 @@ Install with [yarn](https://yarnpkg.com/):
 $ yarn add discord.js-ghost-ping
 ```
 
+
 # ❯ **Example Usage** 
 
  This is a working example.
@@ -51,12 +50,12 @@ const GhostPing = require('discord.js-ghost-ping');
 
 client.on('messageDelete', (...args) => {
 	const res = GhostPing('messageDelete', ...args);
-	console.log(res?.mentions || res);
+	console.log(res ? res.mentions : false);
 });
 
 client.on('messageUpdate', (...args) => {
 	const res = GhostPing('messageUpdate', ...args);
-	console.log(res?.mentions || res);
+	console.log(res ? res.mentions : false);
 });
 
 client.login(process.env['MyToken']);
