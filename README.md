@@ -13,7 +13,7 @@
 
 # ❯ **About**
 
-Introducing a powerful new tool for Discord bot developers: the **Ghost Ping Detector**! Designed by a 4-time verified bot developer, reaching millions of users across Discord, this package is the ultimate solution for detecting and alerting users to ghost pings.
+Introducing a powerful new tool for Discord bot developers: the **Ghost Ping Detector**! Designed by a [4-time verified bot developer](https://liamskinner.co.uk), reaching millions of users across Discord, this package is the ultimate solution for detecting and alerting users to ghost pings.
 
 With the Ghost Ping Detector, your bot can quickly and easily detect when a user has been ghost pinged in a channel. Whenever a recent message with a mention has been deleted, the Ghost Ping Detector will immediately alert your bot, so you can provide a helpful message letting them know that they were ghost pinged.
 
@@ -24,7 +24,7 @@ So why wait? Install the Ghost Ping Detector today and take your Discord bot to 
 
 # ❯ **Help**  
 
-For more information on how to use the package, please refer to the complete documentation on the [repository wiki](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki) pages. If you have any questions or run into any issues, we also have a [Discord server](https://discord.gg/2je9aJynqt) where you can ask the community and the developer for help.
+For more information on how to use the package, please refer to the complete documentation on the [repository wiki](https://github.com/ThatsLiamS/discord.js-ghost-ping/wiki) pages. If you have any questions or run into any issues, we also have a [Discord server](https://liamskinner.co.uk/discord) where you can ask the community and the developer for help.
 
 # ❯ **Installation** 
 

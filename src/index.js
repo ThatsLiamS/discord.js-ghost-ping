@@ -1,17 +1,25 @@
 const events = require('./events.js');
 
 /**
- * handles and executes event files
- *
+ * Handles and executes event files
  * @param {string} event - The message event that was triggered
- *
- * @returns {object|false}
+ * @param {...any} args - Additional arguments to pass to the event handler
+ * @returns {object | false}
 **/
 const detector = (event, ...args) => {
 
-	if (!event || !events[event]) throw new Error('Expected parameter \'event\' at position 0');
-	return events[event](...args) || false;
+    if (typeof event !== 'string' || !events[event]) {
+        console.error(`Invalid event or missing handler for event '${event}'`);
+        return false;
+    };
 
+    const result = events[event](...args);
+
+    if (result === undefined) {
+        console.error(`Event handler for '${event}' returned undefined.`);
+    };
+
+    return result || false;
 };
 
 module.exports = detector;

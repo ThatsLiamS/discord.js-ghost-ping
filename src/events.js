@@ -1,12 +1,27 @@
-const validate = (member, message) => (!member?.user?.bot && member?.id != message?.author?.id) ? member.toString() : null;
-const filter = (r) => (r?.toString()?.startsWith('<')) ? r.toString() : null;
+/**
+ * Validates a Discord member and message combination
+ * @param {object} member - Discord member object
+ * @param {object} message - Discord message object
+ * @returns {string|null} - Formatted mention string or null
+**/
+const validateMention = (member, message) =>
+	(!member?.user?.bot && member?.id !== message?.author?.id) ? member.toString() : null;
+
+/**
+ * Filters and formats a mention string
+ * @param {object} mention - Discord mention object (role or member)
+ * @returns {string|null} - Formatted mention string or null
+**/
+const filterMention = (mention) => (
+	(mention?.toString()?.startsWith('<')) ? mention.toString() : null
+);
+
 
 /**
  * Formats the data into an object to return
  *
  * @param {object} message - Orginal Discord Message object
  * @param {array<string>} mentions - Array of formatted Discord Mentions
- *
  * @returns {object}
 **/
 const formatReturn = (message, mentions) => {
@@ -22,11 +37,22 @@ const formatReturn = (message, mentions) => {
 
 
 /**
+ * Filters all valid mentions from a discord message object
+ * @param {object} message - Discord message object
+ * @returns {object[]}
+**/
+const getMentions = (message) => {
+	return [
+		...message.mentions.roles.map(filter),
+		...message.mentions.members.map(member => validate(member, message)),
+	];
+};
+
+
+/**
  * Handles the messageUpdate event
- *
  * @param {object} oldMessage - Orginal discord message object
  * @param {object} newMessage - Updated discord message object
- *
  * @returns {boolean}
 **/
 const messageUpdate = (oldMessage, newMessage) => {
@@ -36,17 +62,13 @@ const messageUpdate = (oldMessage, newMessage) => {
 		|| (oldMessage.mentions?.members?.size == 0 || !oldMessage.mentions?.members?.size)
 		&& (oldMessage.mentions?.roles?.size == 0) || !oldMessage.mentions?.roles?.size) return false;
 
-	const oldArray = [
-		...oldMessage.mentions.roles.map(x => filter(x)),
-		...oldMessage.mentions.members.map(member => validate(member, newMessage)),
-	];
+	const { oldArray, newArray } = {
+		oldArray: getMentions(oldMessage),
+		newArray: getMentions(newMessage),
+	};
 
-	const newArray = [
-		...newMessage.mentions.roles.map(x => filter(x)),
-		...newMessage.mentions.members.map(member => validate(member, newMessage)),
-	];
-
-	const mentions = oldArray.filter((mention) => !newArray.includes(mention) && mention?.toString()?.startsWith('<'));
+	const mentions = oldArray
+		.filter(mention => !new Set(newArray).has(mention) && mention?.toString()?.startsWith('<'));
 
 	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(newMessage, mentions);
@@ -55,9 +77,7 @@ const messageUpdate = (oldMessage, newMessage) => {
 
 /**
  * Handles the messageDelete event
- *
  * @param {object} message - Discord message object
- *
  * @returns {boolean}
 **/
 const messageDelete = (message) => {
@@ -67,10 +87,8 @@ const messageDelete = (message) => {
 		|| (message.mentions?.members?.size == 0 || !message.mentions?.members?.size)
 		&& (message.mentions?.roles?.size == 0) || !message.mentions?.roles?.size) return false;
 
-	const mentions = [
-		...message.mentions.roles.map(x => filter(x)),
-		...message.mentions.members.map(member => validate(member, message)),
-	].filter((mention) => mention?.toString()?.startsWith('<'));
+	const mentions = getMentions(message)
+		.filter((mention) => mention?.toString()?.startsWith('<'));
 
 	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(message, mentions);
