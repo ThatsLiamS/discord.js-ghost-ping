@@ -1,11 +1,12 @@
 {
 	"name": "discord.js-ghost-ping",
-	"version": "3.0.2",
+	"version": "3.1.0",
 	"description": "Detect Ghost Pings inside of discord.js v14!",
 	"main": "src/index.js",
 	"types": "./src/typings/index.d.ts",
 	"scripts": {
-		"test": "node test/index.js"
+		"test": "node test/index.js",
+		"build": "tsc"
 	},
 	"keywords": [],
 	"author": "ThatsLiamS",
@@ -19,6 +20,7 @@
 	},
 	"homepage": "https://github.com/ThatsLiamS/discord.js-ghost-ping#readme",
 	"devDependencies": {
+		"@types/node": "^20.10.5",
 		"eslint": "^8.28.0"
 	}
 }
