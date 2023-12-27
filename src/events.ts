@@ -1,15 +1,27 @@
-const validate = (member: any, message: any) => (!member?.user?.bot && member?.id !== message?.author?.id) ? member.toString() : null;
-const filter = (r: any) => (r?.toString()?.startsWith('<')) ? r.toString() : null;
+const validMembers = (member: memberType, message: messageType): (string | false) => {
+	if (!member?.user?.bot && member?.id !== message?.author?.id) {
+		return member.toString();
+	};
+	return false;
+};
+
+const validRoles = (role: roleType): (string | false) => {
+	if (role?.toString()?.startsWith('<')) {
+		return role.toString()
+	};
+	return false;
+};
+
 
 /**
  * Formats the data into an object to return
  *
- * @param {any} message - Original Discord Message object
+ * @param {messageType} message - Original Discord Message object
  * @param {string[]} mentions - Array of formatted Discord Mentions
  *
- * @returns {any}
+ * @returns {returnType}
 **/
-const formatReturn = (message: any, mentions: string[]): any => {
+const formatReturn = (message: messageType, mentions: string[]): returnType => {
 	return {
 		author: message.author,
 		channel: message.channel,
@@ -24,27 +36,29 @@ const formatReturn = (message: any, mentions: string[]): any => {
 /**
  * Handles the messageUpdate event
  *
- * @param {object} oldMessage - Original discord message object
- * @param {object} newMessage - Updated discord message object
+ * @param {messageType} oldMessage - Original discord message object
+ * @param {messageType} newMessage - Updated discord message object
  *
- * @returns {object | boolean}
+ * @returns {returnType | boolean}
 **/
-const messageUpdate = (oldMessage: any, newMessage: any): object | boolean => {
+const messageUpdate = (oldMessage: messageType, newMessage: messageType): (returnType | boolean) => {
 
 	if (!oldMessage?.mentions || !newMessage?.mentions) throw new Error('Expected parameters \'oldMessage\', \'newMessage\' at position 1, 2');
 	if (oldMessage.author?.bot) return false;
 
-	const oldArray: any[] = [
-		...oldMessage.mentions.roles.map((x: any) => filter(x)),
-		...oldMessage.mentions.members.map((member: any) => validate(member, newMessage)),
-	];
+	const oldArray: string[] = [
+		...oldMessage.mentions.roles.map((role: roleType) => validRoles(role)),
+		...oldMessage.mentions.members.map((member: memberType) => validMembers(member, newMessage)),
+	]
+	.filter(Boolean);
 
-	const newArray: any[] = [
-		...newMessage.mentions.roles.map((x: any) => filter(x)),
-		...newMessage.mentions.members.map((member: any) => validate(member, newMessage)),
-	];
+	const newArray: string[] = [
+		...newMessage.mentions.roles.map((role: roleType) => validRoles(role)),
+		...newMessage.mentions.members.map((member: memberType) => validMembers(member, newMessage)),
+	]
+	.filter(Boolean);
 
-	const mentions: any[] = oldArray.filter((mention) => !newArray.includes(mention) && mention?.toString()?.startsWith('<'));
+	const mentions: string[] = oldArray.filter((mention: string) => !newArray.includes(mention));
 
 	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(newMessage, mentions);
@@ -54,20 +68,20 @@ const messageUpdate = (oldMessage: any, newMessage: any): object | boolean => {
 /**
  * Handles the messageDelete event
  *
- * @param {object} message - Discord message object
+ * @param {messageType} message - Discord message object
  *
- * @returns {object | boolean}
+ * @returns {returnType | boolean}
 **/
-const messageDelete = (message: any): object | boolean => {
+const messageDelete = (message: messageType): (returnType | boolean) => {
 
 	if (!message?.mentions) throw new Error('Expected parameter \'message\' at position 1');
 	if (message.author?.bot) return false;
 
-	const mentions = [
-		...message.mentions.roles.map((x: any) => filter(x)),
-		...message.mentions.members.map((member: any) => validate(member, message)),
+	const mentions: string[] = [
+		...message.mentions.roles.map((role: roleType) => validRoles(role)),
+		...message.mentions.members.map((member: memberType) => validMembers(member, message)),
 	]
-	.filter((mention: any) => mention?.toString()?.startsWith('<'));
+	.filter(Boolean);
 
 	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(message, mentions);

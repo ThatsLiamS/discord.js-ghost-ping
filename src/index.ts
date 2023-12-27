@@ -4,11 +4,11 @@ const events = require('./events');
  * Handles and executes event files.
  *
  * @param {string} event - The message event that was triggered.
- * @param {...any} args - Additional arguments for the event handler.
+ * @param {...messageType} args - Additional arguments for the event handler.
  *
- * @returns {object | boolean}
+ * @returns {returnType | boolean}
 **/
-const detector = (event: string, ...args: any[]): object | boolean => {
+const detector = (event: string, ...args: messageType[]): (returnType | boolean) => {
 
 	if ((!event) || (['messageDelete', 'messageUpdate'].includes(event) == false)) {
 		throw new Error('Expected parameter \'event\' at position 0');
