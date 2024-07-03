@@ -11,17 +11,17 @@ const events = require('./events');
 const detector = (event: string, ...args: messageType[]): (returnType | boolean) => {
 
 	if ((!event) || (['messageDelete', 'messageUpdate'].includes(event) == false)) {
-		throw new Error('Expected parameter \'event\' at position 0');
-	};
+		throw new Error('Missing Required Parameter: \'event\'.')
+	}
 
-	if (event === 'messageDelete') {
-		return events.messageDelete(args[0])
-	};
-	if (event === 'messageUpdate') {
-		return events.messageUpdate(args[0], args[1])
-	};
-
-	return false;
-};
+	switch (event) {
+		case 'messageDelete':
+			return events.messageDelete(args[0]);
+		case 'messageUpdate':
+			return events.messageUpdate(args[0], args[1]);
+		default:
+			return false;
+	}
+}
 
 module.exports = detector;

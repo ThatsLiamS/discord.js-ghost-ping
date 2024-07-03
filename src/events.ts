@@ -1,16 +1,16 @@
-const validMembers = (member: memberType, message: messageType): (string | false) => {
+const validMembers = (member: memberType, message: messageType): string | false => {
 	if (!member?.user?.bot && member?.id !== message?.author?.id) {
 		return member.toString();
-	};
+	}
 	return false;
-};
+}
 
 const validRoles = (role: roleType): (string | false) => {
 	if (role?.toString()?.startsWith('<')) {
 		return role.toString()
-	};
+	}
 	return false;
-};
+}
 
 
 /**
@@ -29,8 +29,8 @@ const formatReturn = (message: messageType, mentions: string[]): returnType => {
 
 		message,
 		mentions,
-	};
-};
+	}
+}
 
 
 /**
@@ -41,9 +41,11 @@ const formatReturn = (message: messageType, mentions: string[]): returnType => {
  *
  * @returns {returnType | boolean}
 **/
-const messageUpdate = (oldMessage: messageType, newMessage: messageType): (returnType | boolean) => {
+const messageUpdate = (oldMessage: messageType, newMessage: messageType): returnType | boolean => {
 
-	if (!oldMessage?.mentions || !newMessage?.mentions) throw new Error('Expected parameters \'oldMessage\', \'newMessage\' at position 1, 2');
+	if (!oldMessage?.mentions || !newMessage?.mentions) {
+		throw new Error('Missing Required Parameters @ MessageUpdate: \'oldMessage\' or \'newMessage\'.');
+	}
 	if (oldMessage.author?.bot) return false;
 
 	const oldArray: string[] = [
@@ -62,7 +64,7 @@ const messageUpdate = (oldMessage: messageType, newMessage: messageType): (retur
 
 	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(newMessage, mentions);
-};
+}
 
 
 /**
@@ -74,7 +76,7 @@ const messageUpdate = (oldMessage: messageType, newMessage: messageType): (retur
 **/
 const messageDelete = (message: messageType): (returnType | boolean) => {
 
-	if (!message?.mentions) throw new Error('Expected parameter \'message\' at position 1');
+	if (!message?.mentions) throw new Error('Missing Required Parameters @ MessageDelete: \'message\'.');
 	if (message.author?.bot) return false;
 
 	const mentions: string[] = [
@@ -85,9 +87,9 @@ const messageDelete = (message: messageType): (returnType | boolean) => {
 
 	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(message, mentions);
-};
+}
 
 module.exports = {
 	messageUpdate,
 	messageDelete,
-};
+}
