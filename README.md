@@ -13,13 +13,19 @@
 
 # ❯ **About**
 
-Introducing a powerful new tool for Discord bot developers: the **Ghost Ping Detector**! Designed by a [4-time verified bot developer](https://liamskinner.co.uk), reaching millions of users across Discord, this package is the ultimate solution for detecting and alerting users to ghost pings.
+=Introducing the Ghost Ping Detector, a powerful tool designed specifically for Discord bot developers. Created by a [4-time verified bot developer](https://liamskinner.co.uk) who has reached millions of users across Discord, this package is your definitive solution for detecting and alerting users to ghost pings.
 
-With the Ghost Ping Detector, your bot can quickly and easily detect when a user has been ghost pinged in a channel. Whenever a recent message with a mention has been deleted, the Ghost Ping Detector will immediately alert your bot, so you can provide a helpful message letting them know that they were ghost pinged.
+### Features
 
-This package is easy to install and integrate into your existing Discord bot, and is compatible with all major DiscordJS versions. Whether you're a seasoned bot developer or just getting started, the Ghost Ping Detector is the perfect tool to help you create a better, more responsive bot that users will love.
+- **Real-Time Detection:** Instantly detect when a user has been ghost pinged in a channel. The Ghost Ping Detector immediately alerts your bot whenever a recent message with a mention is deleted.
+- **User Notifications:** Provide timely and helpful messages to users, informing them that they were ghost pinged.
+- **Easy Integration:** Seamlessly install and integrate the Ghost Ping Detector into your existing Discord bot. Compatible with all major DiscordJS versions.
+- **Developer-Friendly:** Suitable for both seasoned bot developers and those just starting out.
 
-So why wait? Install the Ghost Ping Detector today and take your Discord bot to the next level!
+### Why Choose Ghost Ping Detector?
+
+- **Reliable and Efficient:** Ensure your bot is more responsive and user-friendly with real-time ghost ping detection.
+- **Enhanced User Experience:** Improve your server's environment by keeping users informed and reducing frustration caused by ghost pings.
 
 
 # ❯ **Help**  

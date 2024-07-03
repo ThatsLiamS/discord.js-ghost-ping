@@ -20,8 +20,8 @@
 	},
 	"homepage": "https://github.com/ThatsLiamS/discord.js-ghost-ping#readme",
 	"devDependencies": {
-		"@types/node": "^20.10.5",
-		"discord.js": "^14.14.1",
-		"eslint": "^8.28.0"
+		"@types/node": "^20.14.9",
+		"discord.js": "^14.15.3",
+		"eslint": "^9.6.0"
 	}
 }
