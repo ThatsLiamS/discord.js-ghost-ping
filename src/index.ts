@@ -1,4 +1,5 @@
-const events = require('./events');
+import type { messageType, returnType } from './typings/index';
+import events from './events';
 
 /**
  * Handles and executes event files.
@@ -11,7 +12,7 @@ const events = require('./events');
 const detector = (event: string, ...args: messageType[]): (returnType | boolean) => {
 
 	if ((!event) || (['messageDelete', 'messageUpdate'].includes(event) == false)) {
-		throw new Error('Missing Required Parameter: \'event\'.')
+		throw new Error('Missing Required Parameter: \'event\'.');
 	}
 
 	switch (event) {
@@ -22,6 +23,6 @@ const detector = (event: string, ...args: messageType[]): (returnType | boolean)
 		default:
 			return false;
 	}
-}
+};
 
-module.exports = detector;
+export default detector;

@@ -1,7 +1,8 @@
 <div align="center">
 	<h1>DiscordJS Ghost Ping</h1>
 	<p>A powerful utility for Discord bot developers to detect and handle ghost pings.</p>
-
+</div>
+<div align="center">
 	<a href='https://npmjs.com/package/discord.js-ghost-ping'><img src='https://img.shields.io/npm/v/discord.js-ghost-ping.svg?maxAge=3600' alt='Version' ></a>
 	<a href='https://npmjs.com/package/discord.js-ghost-ping'><img src='https://img.shields.io/npm/dt/discord.js-ghost-ping.svg?maxAge=3600' alt='Downloads' ></a>
 	<a href='https://npmjs.com/package/discord.js-ghost-ping'><img src='https://img.shields.io/bundlephobia/minzip/discord.js-ghost-ping.svg?maxAge=3600' alt='npm bundle size'></a>

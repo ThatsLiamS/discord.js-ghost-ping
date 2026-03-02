@@ -1,16 +1,18 @@
+import type { memberType, messageType, roleType, returnType } from './typings/index';
+
 const validMembers = (member: memberType, message: messageType): string | false => {
 	if (!member?.user?.bot && member?.id !== message?.author?.id) {
 		return member.toString();
 	}
 	return false;
-}
+};
 
 const validRoles = (role: roleType): (string | false) => {
 	if (role?.toString()?.startsWith('<')) {
-		return role.toString()
+		return role.toString();
 	}
 	return false;
-}
+};
 
 
 /**
@@ -26,11 +28,10 @@ const formatReturn = (message: messageType, mentions: string[]): returnType => {
 		author: message.author,
 		channel: message.channel,
 		guild: message.guild,
-
 		message,
 		mentions,
-	}
-}
+	};
+};
 
 
 /**
@@ -52,19 +53,19 @@ const messageUpdate = (oldMessage: messageType, newMessage: messageType): return
 		...oldMessage.mentions.roles.map((role: roleType) => validRoles(role)),
 		...oldMessage.mentions.members.map((member: memberType) => validMembers(member, newMessage)),
 	]
-	.filter(Boolean);
+		.filter(Boolean);
 
 	const newArray: string[] = [
 		...newMessage.mentions.roles.map((role: roleType) => validRoles(role)),
 		...newMessage.mentions.members.map((member: memberType) => validMembers(member, newMessage)),
 	]
-	.filter(Boolean);
+		.filter(Boolean);
 
 	const mentions: string[] = oldArray.filter((mention: string) => !newArray.includes(mention));
 
 	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(newMessage, mentions);
-}
+};
 
 
 /**
@@ -83,13 +84,13 @@ const messageDelete = (message: messageType): (returnType | boolean) => {
 		...message.mentions.roles.map((role: roleType) => validRoles(role)),
 		...message.mentions.members.map((member: memberType) => validMembers(member, message)),
 	]
-	.filter(Boolean);
+		.filter(Boolean);
 
 	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(message, mentions);
-}
+};
 
-module.exports = {
+export = {
 	messageUpdate,
 	messageDelete,
-}
+};
