@@ -1,21 +1,16 @@
-/* Import pre-made Types */
-import type { Message, GuildMember, Role, User, TextBasedChannels, Guild } from 'discord.js';
+import type { Message, User, TextBasedChannel, Guild } from 'discord.js';
 
-export type messageType = Message;
-export type memberType = GuildMember;
-export type roleType = Role;
+export type GuildMessage = Message<true>;
 
-export type returnType = {
+export type ReturnObject = {
 	author: User,
-	channel: TextBasedChannels,
+	channel: TextBasedChannel,
 	guild: Guild,
-	message: Message,
+	message: GuildMessage,
 	mentions: string[],
 };
 
-declare module 'discord.js-ghost-ping' {
-	function detector(event: 'messageDelete', message: messageType): returnType | false;
-	function detector(event: 'messageUpdate', oldMessage: messageType, newMessage: messageType): returnType | false;
+declare function detector(event: 'messageDelete', message: Message): ReturnObject | false;
+declare function detector(event: 'messageUpdate', oldMessage: Message, newMessage: Message): ReturnObject | false;
 
-	export default detector;
-};
+export default detector;

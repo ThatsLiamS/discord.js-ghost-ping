@@ -1,29 +1,30 @@
-import type { memberType, messageType, roleType, returnType } from './typings/index';
+import type { Message, GuildMember, Role } from 'discord.js';
+import type { GuildMessage, ReturnObject } from './typings/index';
 
-const validMembers = (member: memberType, message: messageType): string | false => {
+const validMembers = (member: GuildMember, message: GuildMessage): string => {
 	if (!member?.user?.bot && member?.id !== message?.author?.id) {
 		return member.toString();
 	}
-	return false;
+	return '';
 };
 
-const validRoles = (role: roleType): (string | false) => {
+const validRoles = (role: Role): string => {
 	if (role?.toString()?.startsWith('<')) {
 		return role.toString();
 	}
-	return false;
+	return '';
 };
 
 
 /**
  * Formats the data into an object to return
  *
- * @param {messageType} message - Original Discord Message object
+ * @param {GuildMessage} message - Original Discord Message object
  * @param {string[]} mentions - Array of formatted Discord Mentions
  *
- * @returns {returnType}
+ * @returns {ReturnObject}
 **/
-const formatReturn = (message: messageType, mentions: string[]): returnType => {
+const formatReturn = (message: GuildMessage, mentions: string[]): ReturnObject => {
 	return {
 		author: message.author,
 		channel: message.channel,
@@ -37,29 +38,28 @@ const formatReturn = (message: messageType, mentions: string[]): returnType => {
 /**
  * Handles the messageUpdate event
  *
- * @param {messageType} oldMessage - Original discord message object
- * @param {messageType} newMessage - Updated discord message object
+ * @param {Message} oldMessage - Original discord message object
+ * @param {Message} newMessage - Updated discord message object
  *
- * @returns {returnType | boolean}
+ * @returns {ReturnObject | false}
 **/
-const messageUpdate = (oldMessage: messageType, newMessage: messageType): returnType | boolean => {
+const messageUpdate = (oldMessage: Message, newMessage: Message): (ReturnObject | false) => {
 
 	if (!oldMessage?.mentions || !newMessage?.mentions) {
 		throw new Error('Missing Required Parameters @ MessageUpdate: \'oldMessage\' or \'newMessage\'.');
 	}
+	if (!oldMessage.inGuild() || !newMessage.inGuild()) return false;
 	if (oldMessage.author?.bot) return false;
 
 	const oldArray: string[] = [
-		...oldMessage.mentions.roles.map((role: roleType) => validRoles(role)),
-		...oldMessage.mentions.members.map((member: memberType) => validMembers(member, newMessage)),
-	]
-		.filter(Boolean);
+		...oldMessage.mentions.roles.map((role: Role) => validRoles(role)),
+		...oldMessage.mentions.members.map((member: GuildMember) => validMembers(member, newMessage)),
+	].filter(Boolean);
 
 	const newArray: string[] = [
-		...newMessage.mentions.roles.map((role: roleType) => validRoles(role)),
-		...newMessage.mentions.members.map((member: memberType) => validMembers(member, newMessage)),
-	]
-		.filter(Boolean);
+		...newMessage.mentions.roles.map((role: Role) => validRoles(role)),
+		...newMessage.mentions.members.map((member: GuildMember) => validMembers(member, newMessage)),
+	].filter(Boolean);
 
 	const mentions: string[] = oldArray.filter((mention: string) => !newArray.includes(mention));
 
@@ -71,26 +71,26 @@ const messageUpdate = (oldMessage: messageType, newMessage: messageType): return
 /**
  * Handles the messageDelete event
  *
- * @param {messageType} message - Discord message object
+ * @param {Message} message - Discord message object
  *
- * @returns {returnType | boolean}
+ * @returns {ReturnObject | false}
 **/
-const messageDelete = (message: messageType): (returnType | boolean) => {
+const messageDelete = (message: Message): (ReturnObject | false) => {
 
 	if (!message?.mentions) throw new Error('Missing Required Parameters @ MessageDelete: \'message\'.');
+	if (!message.inGuild()) return false;
 	if (message.author?.bot) return false;
 
 	const mentions: string[] = [
-		...message.mentions.roles.map((role: roleType) => validRoles(role)),
-		...message.mentions.members.map((member: memberType) => validMembers(member, message)),
-	]
-		.filter(Boolean);
+		...message.mentions.roles.map((role: Role) => validRoles(role)),
+		...message.mentions.members.map((member: GuildMember) => validMembers(member, message)),
+	].filter(Boolean);
 
 	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(message, mentions);
 };
 
-export = {
+export default {
 	messageUpdate,
 	messageDelete,
 };
