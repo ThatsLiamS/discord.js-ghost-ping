@@ -10,7 +10,7 @@ export type ReturnObject = {
 	mentions: string[],
 };
 
-declare function detector(event: 'messageDelete', message: Message): ReturnObject | false;
-declare function detector(event: 'messageUpdate', oldMessage: Message, newMessage: Message): ReturnObject | false;
+declare function detector(message: Message): (ReturnObject | false);
+declare function detector(oldMessage: Message, newMessage: Message): (ReturnObject | false);
 
 export default detector;

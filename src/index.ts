@@ -3,31 +3,27 @@ import type { ReturnObject } from './typings/index';
 
 import events from './events';
 
-type DetectorArgs =
-	| ['messageDelete', Message]
-	| ['messageUpdate', Message, Message];
+function detector(message: Message): (ReturnObject | false);
+function detector(oldMessage: Message, newMessage: Message): (ReturnObject | false);
 
 /**
- * Handles and executes event files.
+ * Handles and routes message events to their appropriate executors.
  *
- * @param {DetectorArgs} args - The event name followed by its required message arguments.
+ * @param {Message} messageOrOld - The Discord message that was deleted, or the original message prior to an update.
+ * @param {Message} [newMessage] - The updated Discord message. Only provided during a messageUpdate event.
  *
- * @returns {ReturnObject | false}
+ * @returns {ReturnObject | false} Returns the formatted mention data, or false if no relevant mentions were altered.
 **/
-const detector = (...args: DetectorArgs): (ReturnObject | false) => {
+function detector(messageOrOld: Message, newMessage?: Message): (ReturnObject | false) {
 
-	if ((!args[0]) || (['messageDelete', 'messageUpdate'].includes(args[0]) == false)) {
-		throw new Error('Missing Required Parameter: \'event\'.');
+	if (!messageOrOld) {
+		throw new Error('Missing Required Parameter: A DiscordJS Message object.');
 	}
 
-	switch (args[0]) {
-		case 'messageDelete':
-			return events.messageDelete(args[1]);
-		case 'messageUpdate':
-			return events.messageUpdate(args[1], args[2]);
-		default:
-			return false;
+	if (newMessage) {
+		return events.messageUpdate(messageOrOld, newMessage);
 	}
+	return events.messageDelete(messageOrOld);
 };
 
 export default detector;
