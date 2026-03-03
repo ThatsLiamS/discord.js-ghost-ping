@@ -52,13 +52,14 @@ const GhostPing = require('discord.js-ghost-ping');
 const client = new Client({ 
 	intents: [
 		GatewayIntentBits.Guilds, 
-		GatewayIntentBits.GuildMessages
-	] 
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent
+	]
 });
 
 // Detect when a message with a ping is deleted
-client.on('messageDelete', (...args) => {
-	const res = GhostPing('messageDelete', ...args);
+client.on('messageDelete', (message) => {
+	const res = GhostPing(message);
 	
 	if (res) {
 		console.log(`Ghost ping detected in deleted message:`, res.mentions);
@@ -66,8 +67,8 @@ client.on('messageDelete', (...args) => {
 });
 
 // Detect when a message with a ping is edited/removed
-client.on('messageUpdate', (...args) => {
-	const res = GhostPing('messageUpdate', ...args);
+client.on('messageUpdate', (oldMessage, newMessage) => {
+	const res = GhostPing(oldMessage, newMessage);
 	
 	if (res) {
 		console.log(`Ghost ping detected in edited message:`, res.mentions);

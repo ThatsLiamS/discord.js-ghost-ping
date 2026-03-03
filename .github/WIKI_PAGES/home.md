@@ -51,20 +51,19 @@ You must utilize both the `messageDelete` and `messageUpdate` events.
 ```JavaScript
 
 client.on('messageDelete', message => { 
-    // Detector logic here
+	// Detector logic here
 });
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
-    // Detector logic here
+	// Detector logic here
 });
 ```
 
 3. Add the Detector Function
-The `GhostPing` variable acts as a non-async function. It requires 2 (or 3) parameters depending on the event type:
+The `GhostPing` detector is a synchronous function that automatically routes your data based on the arguments provided. It requires 1 or 2 parameters depending on the event you are handling:
 
-- **Parameter 1 (Event Type):** Either `'messageDelete'` or `'messageUpdate'`.
-- **Parameter 2+ (Message Object):** * For `'messageDelete'`: Pass the `message` object.
-	- For `'messageUpdate'`: Pass both the `oldMessage` and `newMessage` objects.
+- **For a Deleted Message:** Pass the single `message` object.
+- **For an Updated Message:** Pass both the `oldMessage` and `newMessage` objects.
 
 ## Full Working Example
 Here is how it all comes together using discord.js v14:
@@ -75,15 +74,16 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const GhostPing = require('discord.js-ghost-ping');
 
 const client = new Client({ 
-    intents: [
-        GatewayIntentBits.Guilds, 
-        GatewayIntentBits.GuildMessages
-    ] 
+	intents: [
+		GatewayIntentBits.Guilds, 
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent
+	]
 });
 
 // Detect when a message with a ping is deleted
 client.on('messageDelete', (message) => {
-	const res = GhostPing('messageDelete', message);
+	const res = GhostPing(message);
 
 	if (res) {
 		console.log(`Ghost ping detected in deleted message:`, res.mentions);
@@ -92,7 +92,7 @@ client.on('messageDelete', (message) => {
 
 // Detect when a message with a ping is edited/removed
 client.on('messageUpdate', (oldMessage, newMessage) => {
-	const res = GhostPing('messageUpdate', oldMessage, newMessage);
+	const res = GhostPing(oldMessage, newMessage);
 
 	if (res) {
 		console.log(`Ghost ping detected in edited message:`, res.mentions);

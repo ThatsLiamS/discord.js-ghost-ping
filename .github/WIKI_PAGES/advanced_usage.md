@@ -15,42 +15,46 @@ Here is a working example demonstrating how to integrate the ghost ping detector
 
 ```javascript
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
-const GhostPing = require('discord.js-ghost-ping'); //
+const GhostPing = require('discord.js-ghost-ping');
 
 const client = new Client({ 
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] 
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent
+	]
 });
 
 // The ID of the channel where moderators review logs
 const LOG_CHANNEL_ID = '123456789012345678'; 
 
 client.on('messageDelete', async (message) => {
-    // 1. Ignore bot messages so they don't trigger the system
-    if (message.author?.bot) return;
+	// 1. Ignore bot messages so they don't trigger the system
+	if (message.author?.bot) return;
 
-    // 2. Run the package's detector
-    const result = GhostPing('messageDelete', message);
+	// 2. Run the package's detector
+	const result = GhostPing(message);
 
-    if (result) {
-        // 3. Build a embed using the data the package returns
-        const logEmbed = new EmbedBuilder()
-            .setColor('#ff0000')
-            .setTitle('👻 Ghost Ping Detected')
-            .setThumbnail(result.author.displayAvatarURL())
-            .addFields(
-                { name: 'Sender', value: `<@${result.author.id}>`, inline: true },
-                { name: 'Channel', value: `<#${result.channel.id}>`, inline: true },
-                { name: 'Mentions', value: result.mentions.join(', ') },
-                { name: 'Original Message', value: result.message.content || 'No text content' }
-            )
-            .setTimestamp();
+	if (result) {
+		// 3. Build a embed using the data the package returns
+		const logEmbed = new EmbedBuilder()
+			.setColor('#ff0000')
+			.setTitle('👻 Ghost Ping Detected')
+			.setThumbnail(result.author.displayAvatarURL())
+			.addFields(
+				{ name: 'Sender', value: `<@${result.author.id}>`, inline: true },
+				{ name: 'Channel', value: `<#${result.channel.id}>`, inline: true },
+				{ name: 'Mentions', value: result.mentions.join(', ') },
+				{ name: 'Original Message', value: result.message.content || 'No text content' }
+			)
+			.setTimestamp();
 
-        // 4. Send the embed to the staff logging channel
-        const logChannel = client.channels.cache.get(LOG_CHANNEL_ID);
-        if (logChannel) {
-            await logChannel.send({ embeds: [logEmbed] });
-        }
-    }
+		// 4. Send the embed to the staff logging channel
+		const logChannel = client.channels.cache.get(LOG_CHANNEL_ID);
+		if (logChannel) {
+			await logChannel.send({ embeds: [logEmbed] });
+		}
+	}
 });
 
 client.login(process.env.DISCORD_TOKEN);
