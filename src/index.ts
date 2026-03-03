@@ -7,12 +7,16 @@ function detector(message: Message): (ReturnObject | false);
 function detector(oldMessage: Message, newMessage: Message): (ReturnObject | false);
 
 /**
- * Handles and routes message events to their appropriate executors.
+ * @function detector
+ * @description Main entry point for the detector. Routes to either messageUpdate or messageDelete logic based on arguments.
  *
- * @param {Message} messageOrOld - The Discord message that was deleted, or the original message prior to an update.
- * @param {Message} [newMessage] - The updated Discord message. Only provided during a messageUpdate event.
+ * @param {Message} messageOrOld - The deleted message, or the old message if an edit occurred.
+ * @param {Message} [newMessage] - The updated message (optional; only provided on message edits).
  *
- * @returns {ReturnObject | false} Returns the formatted mention data, or false if no relevant mentions were altered.
+ * @returns {ReturnObject | false} Returns the ghost ping data object if detected, otherwise false.
+ * @throws {Error} Throws if the initial 'messageOrOld' parameter is omitted.
+ *
+ * @author Liam Skinner <me@liamskinner.co.uk>
 **/
 function detector(messageOrOld: Message, newMessage?: Message): (ReturnObject | false) {
 
