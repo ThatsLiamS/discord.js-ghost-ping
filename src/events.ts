@@ -1,4 +1,4 @@
-import type { Message, GuildMember, Role } from 'discord.js';
+import { Message, GuildMember, Role, MessageMentions } from 'discord.js';
 import type { GuildMessage, ReturnObject } from './typings/index';
 
 
@@ -28,7 +28,7 @@ const isEligible = (message: Message): message is GuildMessage => {
  * @author Liam Skinner <me@liamskinner.co.uk>
 **/
 const validMembers = (member: GuildMember, message: GuildMessage): string => {
-	if (!member?.user?.bot && member?.id !== message?.author?.id) {
+	if (!member.user.bot && member.id !== message.author.id) {
 		return member.toString();
 	}
 	return '';
@@ -45,7 +45,7 @@ const validMembers = (member: GuildMember, message: GuildMessage): string => {
  * @author Liam Skinner <me@liamskinner.co.uk>
 **/
 const validRoles = (role: Role): string => {
-	if (role?.toString()?.startsWith('<')) {
+	if (role.toString().startsWith('<')) {
 		return role.toString();
 	}
 	return '';
@@ -83,10 +83,26 @@ const formatReturn = (message: GuildMessage, mentions: string[]): ReturnObject =
  * @author Liam Skinner <me@liamskinner.co.uk>
  */
 const extractMentions = (targetMessage: GuildMessage): string[] => {
-	return [
-		...targetMessage.mentions.roles.map((role: Role) => validRoles(role)),
-		...targetMessage.mentions.members.map((member: GuildMember) => validMembers(member, targetMessage)),
-	].filter(Boolean);
+	const mentions = new Set<string>();
+
+	if (targetMessage.mentions.everyone) {
+		const matches = targetMessage.content.matchAll(MessageMentions.EveryonePattern);
+		for (const match of matches) {
+			mentions.add(match[0]);
+		}
+	}
+
+	targetMessage.mentions.roles.forEach((role: Role) => {
+		const isValid = validRoles(role);
+		if (isValid) mentions.add(isValid);
+	});
+
+	targetMessage.mentions.members.forEach((member: GuildMember) => {
+		const isValid = validMembers(member, targetMessage);
+		if (isValid) mentions.add(isValid);
+	});
+
+	return Array.from(mentions);
 };
 
 
