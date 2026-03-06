@@ -1,6 +1,21 @@
 import type { Message, GuildMember, Role } from 'discord.js';
 import type { GuildMessage, ReturnObject } from './typings/index';
 
+
+/**
+ * @function isEligible
+ * @description A TypeScript type guard that checks if a message was sent within a guild (server) and ensures the author is not a bot.
+ *
+ * @param {Message} message - The standard Discord.js message object to evaluate.
+ *
+ * @returns {boolean} Returns true if the message meets the criteria, safely narrowing its type to a GuildMessage for subsequent operations.
+ *
+ * @author Liam Skinner <me@liamskinner.co.uk>
+**/
+const isEligible = (message: Message): message is GuildMessage => {
+	return message.inGuild() && !message.author?.bot;
+};
+
 /**
  * @function validMembers
  * @description Validates a mentioned member to ensure they are not a bot and not the author of the message.
@@ -36,7 +51,6 @@ const validRoles = (role: Role): string => {
 	return '';
 };
 
-
 /**
  * @function formatReturn
  * @description Formats the standardised return object containing the ghost ping data.
@@ -58,6 +72,23 @@ const formatReturn = (message: GuildMessage, mentions: string[]): ReturnObject =
 	};
 };
 
+/**
+ * @function extractMentions
+ * @description Helper function to extract and validate mentions from a message object to adhere to DRY principles.
+ *
+ * @param {GuildMessage} targetMessage - The message to extract mentions from.
+ *
+ * @returns {string[]} An array of valid mention strings.
+ *
+ * @author Liam Skinner <me@liamskinner.co.uk>
+ */
+const extractMentions = (targetMessage: GuildMessage): string[] => {
+	return [
+		...targetMessage.mentions.roles.map((role: Role) => validRoles(role)),
+		...targetMessage.mentions.members.map((member: GuildMember) => validMembers(member, targetMessage)),
+	].filter(Boolean);
+};
+
 
 /**
  * @function messageUpdate
@@ -76,22 +107,14 @@ const messageUpdate = (oldMessage: Message, newMessage: Message): (ReturnObject 
 	if (!oldMessage?.mentions || !newMessage?.mentions) {
 		throw new Error('Missing Required Parameters @ MessageUpdate: \'oldMessage\' or \'newMessage\'.');
 	}
-	if (!oldMessage.inGuild() || !newMessage.inGuild()) return false;
-	if (oldMessage.author?.bot) return false;
+	if (!isEligible(oldMessage) || !isEligible(newMessage)) return false;
 
-	const oldArray: string[] = [
-		...oldMessage.mentions.roles.map((role: Role) => validRoles(role)),
-		...oldMessage.mentions.members.map((member: GuildMember) => validMembers(member, newMessage)),
-	].filter(Boolean);
+	const oldArray = extractMentions(oldMessage);
+	const newArray = extractMentions(newMessage);
 
-	const newArray: string[] = [
-		...newMessage.mentions.roles.map((role: Role) => validRoles(role)),
-		...newMessage.mentions.members.map((member: GuildMember) => validMembers(member, newMessage)),
-	].filter(Boolean);
+	const mentions = oldArray.filter((mention: string) => !newArray.includes(mention));
+	if (!mentions.length) return false;
 
-	const mentions: string[] = oldArray.filter((mention: string) => !newArray.includes(mention));
-
-	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(newMessage, mentions);
 };
 
@@ -109,18 +132,17 @@ const messageUpdate = (oldMessage: Message, newMessage: Message): (ReturnObject 
 **/
 const messageDelete = (message: Message): (ReturnObject | false) => {
 
-	if (!message?.mentions) throw new Error('Missing Required Parameters @ MessageDelete: \'message\'.');
-	if (!message.inGuild()) return false;
-	if (message.author?.bot) return false;
+	if (!message?.mentions) {
+		throw new Error('Missing Required Parameters @ MessageDelete: \'message\'.');
+	}
+	if (!isEligible(message)) return false;
 
-	const mentions: string[] = [
-		...message.mentions.roles.map((role: Role) => validRoles(role)),
-		...message.mentions.members.map((member: GuildMember) => validMembers(member, message)),
-	].filter(Boolean);
+	const mentions = extractMentions(message);
+	if (!mentions.length) return false;
 
-	if (!mentions || mentions.length < 1) return false;
 	return formatReturn(message, mentions);
 };
+
 
 export default {
 	messageUpdate,
